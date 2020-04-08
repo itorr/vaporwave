@@ -272,7 +272,7 @@
 		<div class="img-list">
 			<img v-for="src,index in images"
 			     :class="{active:isActiveImg($el,src)}"
-			     :src="src" crossOrigin="anonymous"
+			     :src="src" crossOrigin="Anonymous"
 			     @click="setImageAndDraw"
 			     @load="index===0&&setImageAndDraw($event)">
 		</div>
