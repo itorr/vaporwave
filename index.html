@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>九十年代时光机</title>
+<style>
+	html{
+		background: #ffe8fe;
+		color: #007323;
+	}
+	head{
+		display: block;
+		text-align: center;
+	}
+	title{
+		display: block;
+		font-weight: bold;
+		font-size:2.4em;
+		padding:2em 0 0;
+	}
+	canvas{
+		width: 640px;
+		height: 480px;
+		background: #333;
+	}
+	img{
+		height: 480px;
+	}
+	.output{
+		height: 480px;
+		margin:0 400px 0 0;
+		text-align: center;
+	}
+	.output img{
+		display: inline-block;
+		height: 480px;
+		width: 640px;
+		object-fit: contain;
+		background: #222;
+
+
+
+	}
+	input[type="range"]{
+		width: 260px;
+	}
+	.config{
+		padding:20px;
+		width: 400px;
+		margin:0 auto;
+		font-size:12px;
+		text-align: left;
+	}
+	.label-box{
+		display: block;
+	}
+	/*
+	.output{
+		float: left;
+		position: relative;
+	}
+	.output:after{
+		 content: '';
+		position: absolute;
+		top:0;
+		right:0;
+		bottom:0;
+		left:0;
+		background: url(bg.png) no-repeat top center;
+		background-size:cover;
+	}
+
+	#输出{
+		display: block;
+		padding:180px 240px 220px;
+		background:url(bg.jpg) no-repeat top center;
+		background-size:cover;
+	}
+	*/
+	html{
+		padding-bottom:200px;
+	}
+	.config{
+		position: fixed;
+		right:0;
+		top:0;
+		bottom:180px;
+	}
+	.img-list{
+		position: fixed;
+		bottom:0;
+		left:0;
+		right:0;
+		white-space: nowrap;
+		overflow: auto;
+		font-size:0;
+	}
+	.img-list img{
+		display: inline-block;
+		vertical-align: top;
+		width: 180px;
+		height: 180px;
+		object-fit: cover;
+		cursor: pointer;
+	}
+</style>
+<div class="app">
+	<div class="output">
+		<img :src="src" v-if="src">
+	</div>
+	<div class="ctrl-box">
+
+
+		<label>
+			<input type="checkbox" v-model="showConfig">选项
+		</label>
+		<div class="config" v-if="showConfig">
+			<div class="label-box">
+				画面亮度：
+				<input type="range" v-model.number="config.light"  min="0" max="4" step="0.01">
+				<span>{{config.light}}</span>
+			</div>
+			<div class="label-box">
+				画面反差：
+				<input type="range" v-model.number="config.contrast"  min="0" max="4" step="0.01">
+				<span>{{config.contrast}}</span>
+			</div>
+			<div class="label-box">
+				暗部褪色：
+				<input type="range" v-model.number="config.darkFade"  min="0" max="128" step="1">
+				<span>{{config.darkFade}}</span>
+			</div>
+			<div class="label-box">
+				亮部褪色：
+				<input type="range" v-model.number="config.brightFade"  min="0" max="128" step="1">
+				<span>{{config.brightFade}}</span>
+			</div>
+			<div class="label-box">
+				紫鲜艳度：
+				<input type="range" v-model.number="config.vividU" min=".1" max="2" step="0.01">
+				<span>{{config.vividU}}</span>
+			</div>
+			<div class="label-box">
+				青鲜艳度：
+				<input type="range" v-model.number="config.vividV" min=".1" max="2" step="0.01">
+				<span>{{config.vividV}}</span>
+			</div>
+			<div class="label-box">
+				紫色偏移：
+				<input type="range" v-model.number="config.shiftU" min="-100" max="100" step="1">
+				<span>{{config.shiftU}}</span>
+			</div>
+			<div class="label-box">
+				青色偏移：
+				<input type="range" v-model.number="config.shiftV" min="-100" max="100" step="1">
+				<span>{{config.shiftV}}</span>
+			</div>
+			<div class="label-box">
+				像素合并：
+				<input type="range" v-model.number="config.zoom"   min="1" max="20" step="0.01">
+				<span>{{config.zoom}}</span>
+			</div>
+			<div class="label-box">
+				色彩断层：
+				<input type="range" v-model.number="config.level"  min="1" max="255" step="1">
+				<span>{{config.level}}</span>
+			</div>
+			<div class="label-box">
+				横向偏移：
+				<input type="range" v-model.number="config.shiftX" min="0" max="1000" step="1">
+				<span>{{config.shiftX}}</span>
+			</div>
+			<div class="label-box">
+				纵向偏移：
+				<input type="range" v-model.number="config.shiftY" min="0" max="1000" step="1">
+				<span>{{config.shiftY}}</span>
+			</div>
+			<!--
+			<div class="label-box">
+				信号偏移：
+				<input type="range" v-model.number="config.yuv420Noise" min="1" max="2" step="0.01">
+				<span>{{config.yuv420Noise}}</span>
+			</div>
+			-->
+			<div class="label-box">
+				整倍偏移：
+				<input type="range" v-model.number="config.yuv420Noise" min="1" max="8" step="1">
+				<span>{{config.yuv420Noise}}</span>
+			</div>
+
+			<div class="label-box">
+				隔行扫描：
+				<input type="range" v-model.number="config.interlaced" min="0" max="8" step="1">
+				<span>{{config.interlaced}}</span>
+			</div>
+
+			<div class="label-box">
+				信息置换：
+				<input type="range" v-model.number="config.replace" min="0" max="3" step="1">
+				<span>{{config.replace}}</span>
+			</div>
+
+			<div class="label-box">
+				比例变形：
+				<input type="range" v-model.number="config.ratio" min="0.5" max="2" step="0.1">
+				<span>{{config.ratio}}</span>
+			</div>
+
+			<div class="label-box">
+				边缘偏差：
+				<input type="range" v-model.number="config.border" min="0" max="10" step="0.1">
+				<span>{{config.border}}</span>
+			</div>
+
+			<div class="label-box">
+				信号质量：
+				<input type="range" v-model.number="config.quality" min="0" max="1" step="0.05">
+				<span>{{config.quality}}</span>
+			</div>
+			<div class="label-box">
+				信号噪声：
+				<input type="range" v-model.number="config.lightNoise" min="0" max="500" step="1">
+				<span>{{config.lightNoise}}</span>
+			</div>
+			<div class="label-box">
+				胶片颗粒：
+				<input type="range" v-model.number="config.darkNoise" min="0" max="500" step="1">
+				<span>{{config.darkNoise}}</span>
+			</div>
+
+			<div class="label-box">
+				<label>
+					<input type="radio" v-model="config.fit" value="cover">填充
+				</label>
+				<label>
+					<input type="radio" v-model="config.fit" value="contain">完整
+				</label>
+				<label>
+					<input type="radio" v-model="config.fit" value="fill">拉伸
+				</label>
+
+			</div>
+
+
+			<div class="label-box">
+				<label>
+					<input type="checkbox" v-model="config.sharpen">偏移锐化
+				</label>
+				<label>
+					<input type="checkbox" v-model="config.yuv420">420
+				</label>
+				<label>
+					<input type="checkbox" v-model="config.snow">信号沉默
+				</label>
+				<label>
+					<input type="checkbox" v-model="config.sizeOrigin">原尺寸
+				</label>
+				<label>
+					<input type="checkbox" v-model="config.invertLight">颠倒黑白
+				</label>
+
+			</div>
+
+			<div class="label-box">
+				<button @click="addConfig()">创建预设</button>
+			</div>
+			<div class="label-box">
+				<button>导出图片</button>
+			</div>
+		</div>
+
+		<div class="config-list">
+			<button v-for="_config in configs" @click="setConfig(_config)">
+				{{_config.name}}
+			</button>
+		</div>
+		<div class="img-list">
+			<img v-for="src,index in images" :src="src" crossOrigin="anonymous" @click="setImageAndDraw" @load="index===0&&setImageAndDraw($event)">
+		</div>
+	</div>
+
+</div>
+
+<script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
+<script src="90s.js"></script>
+<script>
+
+	const readFileToURL = (file,onOver)=>{
+		var reader = new FileReader();
+		reader.onload = ()=>{
+			const src = reader.result;
+			onOver(src);
+		};
+		reader.readAsDataURL(file);
+	};
+
+	const readFileAndSetIMGSrc = file=>{
+		readFileToURL(file,src=>{
+			const img = new Image();
+			img.src = src;
+			img.onload = ()=>{
+				app.img = img;
+				reDraw(img,app.config,src=>{
+					app.src = src;
+				});
+			}
+		});
+	};
+
+	const isImageRegex = /^image\/(jpeg|gif|png|bmp|webp)$/;
+
+	document.addEventListener('paste',e=>{
+		console.log(e.clipboardData,e.clipboardData.files);
+
+		const clipboardData = e.clipboardData;
+		if(clipboardData.items[0]){
+			let file = clipboardData.items[0].getAsFile();
+
+			if(file && isImageRegex.test(file.type)){
+				return readFileAndSetIMGSrc(file);
+			}
+		}
+
+		if(clipboardData.files.length){
+			for(let i = 0;i<clipboardData.files.length;i++){
+				if(isImageRegex.test(clipboardData.files[i].type)){
+					console.log(clipboardData.files[i])
+					readFileAndSetIMGSrc(clipboardData.files[i]);
+				}
+			}
+		}
+	});
+
+	document.addEventListener('dragover',e=>{
+		e.preventDefault();
+	});
+	document.addEventListener('drop',e=>{
+		e.preventDefault();
+
+		const file = e.dataTransfer.files[0];
+
+		if(file && file.type.match(isImageRegex)){
+			readFileAndSetIMGSrc(file);
+		}
+	});
+
+	const _reDraw = (img,config,callback)=>{
+
+		clearTimeout(reDraw.T);
+		reDraw.T = setTimeout(()=>{
+			reDraw(img,config,callback);
+			app.saveData();
+		},100);
+	};
+
+	const deepCopy = o=>JSON.parse(JSON.stringify(o));
+
+
+	const defaultConfig = {
+
+		zoom: 1,
+
+		light: 1,
+		contrast: 1,
+
+		darkFade:0,
+		brightFade:0,
+
+		shiftX: 0,
+		shiftY: 0,
+
+		shiftU: 0,
+		shiftV: 0,
+
+
+		level: 4, //颜色断层
+
+		interlaced: 0, //隔行扫描
+		interlacedStrong:1,
+
+		replace:0,
+
+		vividU : 0,
+		vividV : 0,
+
+		sizeOrigin: false,
+		sharpen: true,
+		invertLight: false,
+
+		yuv420:true,
+		yuv420Noise:1,
+
+		snow:false,
+		quality:0.6,
+		damage:0,
+
+		ratio:1,
+
+
+		lightNoise:0, //明度噪声
+		darkNoise:0, //胶片噪声
+
+		fit:'cover',
+
+		border:0,
+
+	};
+
+	const configs = [
+			{
+				"name": "愈渐升温",
+				"zoom": 1,
+				"shiftX": 6,
+				"shiftY": 4,
+				"shiftU": -15,
+				"shiftV": 19,
+				"level": 4,
+				"vividU": 0.92,
+				"vividV": 0.74,
+				"light": 0.89,
+			},
+			{
+				"name": "灼热苦夏",
+				"zoom": 1,
+				"shiftX": 4,
+				"shiftY": 4,
+				"shiftU": -15,
+				"shiftV": 40,
+				"level": 4,
+				"vividU": 1.2,
+				"vividV": 1,
+				"light": 0.9,
+			},
+			{
+				"name": "褪色老胶",
+				"zoom": 1.05,
+				"shiftX": 4,
+				"shiftY": 4,
+				"shiftU": 0,
+				"shiftV": 0,
+				"level": 4,
+				"vividU": 0.15,
+				"vividV": 0.1,
+				"light": 2.26,
+				lightNoise:20,
+				darkNoise: 40,
+			},
+			{
+				"name": "隔行扫描",
+				"zoom": 2.4,
+				"light": 1,
+				"contrast": 1,
+				"darkFade": 55,
+				"brightFade": 0,
+				"shiftX": 4,
+				"shiftY": 0,
+				"shiftU": 0,
+				"shiftV": 1,
+				"level": 12,
+				"interlaced": 2,
+				"interlacedStrong": 1,
+				"vividU": 1,
+				"vividV": 1,
+				"sizeOrigin": false,
+				"sharpen": true,
+				"yuv420": true,
+				"yuv420Noise": 1,
+				"snow": false,
+				"quality": 0.6,
+				"damage": 0,
+				ratio:1.2,
+				border:3,
+			},
+			{
+				"name": "数字信号",
+				"zoom": 1,
+				"shiftX": 4,
+				"shiftY": 0,
+				"shiftU": 0,
+				"shiftV": 1,
+				"level": 4,
+				"vividU": 1,
+				"vividV": 1,
+				"light": 1,
+				fit:'contain'
+			},
+			{
+				"name": "同步失败",
+				"zoom": 3.15,
+				"shiftX": 20,
+				"shiftY": 14,
+				"shiftU": 2,
+				"shiftV": -10,
+				"level": 4,
+				"vividU": 0.59,
+				"vividV": 0.48,
+				"light": 1,
+				quality:.3,
+				lightNoise: 20,
+				border:4,
+			},
+			{
+				"name": "信号沉默",
+				"zoom": 2,
+				"light": 1,
+				"shiftX": 4,
+				"shiftY": 0,
+				"shiftU": 1,
+				"shiftV": 1,
+				"level": 4,
+				"vividU": 0.41,
+				"vividV": 0.41,
+				"sizeOrigin": false,
+				"sharpen": true,
+				"yuv420": true,
+				"snow": true,
+				"quality": 1,
+				"damage": 0,
+			},
+			{
+				"zoom": 1,
+				"light": 1.1,
+				"shiftX": 13,
+				"shiftY": 0,
+				"shiftU": -2,
+				"shiftV": 0,
+				"level": 255,
+				"vividU": 0.98,
+				"vividV": 0.97,
+				"sizeOrigin": false,
+				"sharpen": true,
+				"yuv420": true,
+				"snow": false,
+				"quality": 0.4,
+				"damage": 0,
+				"name": "霓虹泛滥"
+			},
+			{
+				"name": "一九零零",
+				"zoom": 1.1,
+				"light": 2.2,
+				"contrast": 0.5,
+				"darkFade": 46,
+				"brightFade": 27,
+				"shiftX": 0,
+				"shiftY": 4,
+				"shiftU": -17,
+				"shiftV": 24,
+				"level": 55,
+				"vividU": 0.1,
+				"vividV": 0.1,
+				"sizeOrigin": false,
+				"sharpen": true,
+				"yuv420": true,
+				"snow": false,
+				"quality": 0.35,
+				"damage": 0,
+				lightNoise: 40,
+				border:1,
+			},
+			{
+				"name": "颜色极端",
+				"zoom": 1,
+				"light": 1.06,
+				"contrast": 0,
+				"darkFade": 14,
+				"brightFade": 0,
+				"shiftX": 647,
+				"shiftY": 1000,
+				"shiftU": 100,
+				"shiftV": -26,
+				"level": 255,
+				"vividU": 0.96,
+				"vividV": 1.56,
+				"sizeOrigin": false,
+				"sharpen": true,
+				"yuv420": true,
+				"snow": false,
+				"quality": 0.8,
+				"damage": 0,
+			},
+			{
+				"name": "高彩像素",
+				"zoom": 4,
+				"light": 1.06,
+				"contrast": 0,
+				"darkFade": 14,
+				"brightFade": 0,
+				"shiftX": 647,
+				"shiftY": 1000,
+				"shiftU": 100,
+				"shiftV": -26,
+				"level": 255,
+				"vividU": 0.96,
+				"vividV": 1.56,
+				"sizeOrigin": false,
+				"sharpen": false,
+				"yuv420": true,
+				"snow": false,
+				"quality": 1,
+				"damage": 0,
+				"ratio": 2,
+			},
+			{
+				"zoom": 1.6,
+				"light": 1.52,
+				"contrast": 2.32,
+				"darkFade": 0,
+				"brightFade": 0,
+				"shiftX": 4,
+				"shiftY": 4,
+				"shiftU": 0,
+				"shiftV": 0,
+				"level": 1,
+				"interlaced": 1,
+				"interlacedStrong": 1,
+				"replace": 0,
+				"vividU": 0.15,
+				"vividV": 0.1,
+				"sizeOrigin": false,
+				"sharpen": true,
+				"invertLight": true,
+				"yuv420": true,
+				"yuv420Noise": 1,
+				"snow": false,
+				"quality": 0.35,
+				"damage": 0,
+				"ratio": 1.8,
+				"name": "颠倒黑白",
+				darkNoise: 250,
+				fit:'contain',
+			},
+			{
+				"zoom": 2.54,
+				"light": 1.52,
+				"contrast": 2.32,
+				"darkFade": 0,
+				"brightFade": 0,
+				"shiftX": 4,
+				"shiftY": 611,
+				"shiftU": 0,
+				"shiftV": 0,
+				"level": 1,
+				"interlaced": 1,
+				"interlacedStrong": 1,
+				"replace": 0,
+				"vividU": 0.15,
+				"vividV": 2,
+				"sizeOrigin": false,
+				"sharpen": true,
+				"invertLight": true,
+				"yuv420": true,
+				"yuv420Noise": 1,
+				"snow": false,
+				"quality": 0.35,
+				"damage": 0,
+				"ratio": 2,
+				"lightNoise": 123,
+				"darkNoise": 500,
+				"fit": "fill",
+				"name": "两极色温"
+			},
+			{
+				"zoom": 1.2,
+				"light": 1.1,
+				"contrast": 1.17,
+				"darkFade": 38,
+				"brightFade": 12,
+				"shiftX": 4,
+				"shiftY": 0,
+				"shiftU": 0,
+				"shiftV": 1,
+				"level": 1,
+				"interlaced": 1,
+				"interlacedStrong": 1,
+				"replace": 0,
+				"vividU": 0.73,
+				"vividV": 0.67,
+				"sizeOrigin": false,
+				"sharpen": true,
+				"invertLight": false,
+				"yuv420": true,
+				"yuv420Noise": 1,
+				"snow": false,
+				"quality": 0.9,
+				"damage": 0,
+				"ratio": 1,
+				"lightNoise": 9,
+				"darkNoise": 16,
+				"fit": "contain",
+				border:8,
+				"name": "影片光碟"
+			}
+		];
+
+	const config = {
+		...defaultConfig,
+		...configs[0]
+	};
+
+
+
+	const data = {
+		src:'',
+		img:null,
+		config,
+		showConfig:true,
+		configs,
+		images:[
+			'img/24214830711_1ab5c844b9_o.jpg',
+			'img/(CM 30s)[2010] [20100410-0234275].jpg',
+			'img/1300101534.jpg',
+			'img/1300105873.jpg',
+			'img/1300106089.jpg',
+			'img/1300155244.jpg',
+			'img/1300155353.jpg',
+			'img/1300866289.jpg',
+			'img/1300871990.jpg',
+			'img/1301268659.jpg',
+			'img/1301898127.jpg',
+			'img/1302755125.jpg',
+			'img/1320935025.jpg',
+			'img/1321782056.jpg',
+			'img/1327427363.jpg',
+			'img/1327427373.jpg',
+			'img/1327427556.jpg',
+			'img/1327503810.jpg',
+			'img/1329190436.jpg',
+			'img/1329190448.jpg',
+			'img/1342130509.jpg',
+			'img/1342130562.jpg',
+			'img/1346337022.jpg',
+			'img/1346337029.jpg',
+			'img/2011-02-20CLANNAD OP.jpg',
+			'img/IMG_9725.JPG',
+			'img/[4hun][Eden_of_[20100512-1821433].jpg',
+			'img/[4hun][Eden_of_[20100512-1824175].jpg',
+			'img/[4hun][The_Disa[20110209-1917182].jpg',
+			'img/[4hun][The_Disa[20110209-1923151].jpg',
+			'img/[4hun][The_Disa[20110209-2008474].jpg',
+			'img/[D-RAWS] Evange[20100601-1158471].jpg',
+			'img/[D-RAWS] Evange[20100601-1238026].jpg',
+			'img/[D-RAWS] Evange[20100602-0110106].jpg',
+			'img/[D-RAWS] Evange[20100602-0121479].jpg',
+			'img/[D-RAWS] Evange[20100602-0126525].jpg',
+			'img/[D-RAWS] Evange[20100602-0128508].jpg',
+			'img/[QTS] CLANNAD B[20100520-0110578].jpg',
+			'img/[QTS]_serial_ex[20110308-1803541].jpg',
+			'img/[后天].The.Day.Af[20110217-1711512].jpg',
+			'img/[后天].The.Day.Af[20110311-1828402].jpg',
+			'img/[古城荆棘王].[bwfjc][20110310-0739373].jpg',
+			'img/[诸神字幕组][涼宮ハルヒちゃ[20110206-0232120].jpg',
+			'img/[凉宫春日的忧郁].[CASO[20110212-1308423].jpg',
+			'img/[凉宫春日的忧郁].[CASO[20110212-1349011].jpg',
+			'img/a-certain-magical-index-2-episode-18-biribiri-shimapan-anime-image-gallery-018.jpg',
+			'img/a-certain-magical-index-2-episode-18-biribiri-shimapan-anime-image-gallery-020.jpg',
+			'img/clannad-disc5-cover.jpg',
+			'img/clannad-op-b.jpg',
+			'img/disa-01.jpg',
+			'img/disa-02.jpg',
+			'img/disa-03.jpg',
+			'img/disa-04.jpg',
+			'img/eureka-01.jpg',
+			'img/eva01-01.jpg',
+			'img/eva01-02.jpg',
+			'img/eva01-03.jpg',
+			'img/eva01-04.jpg',
+			'img/eva01-05.jpg',
+			'img/eva01-06.jpg',
+			'img/eva28-02.jpg',
+			'img/haruhi-01.jpg',
+			'img/haruhi-02.jpg',
+			'img/haruhi-04.jpg',
+			'img/nausic-01.jpg',
+			'img/orei-01.jpg',
+			'img/timg-1.jpg',
+			'img/timg.jpg',
+			'img/toari-01.jpg',
+			'img/头文字D第四部17[20100508-0351400].jpg',
+			'img/唐山大地震6.jpg',
+			'img/ヱヴァンゲリヲン 新劇場版 序[20100426-0849495].jpg',
+		]
+	};
+
+	const isKanjiRegex = /^[\u0800-\u9fa5]+$/;
+
+	const app = new Vue({
+		el:'.app',
+		data,
+		methods: {
+			setConfig(config){
+				this.config = deepCopy({
+					...defaultConfig,
+					...config
+				});
+				this.draw();
+			},
+			addConfig(){
+				const name = prompt('输入四字中日文滤镜名（务必是四个字）');
+				if(!name){
+					return;
+				}
+				if(!isKanjiRegex.test(name.trim())){
+					return alert('这不是四字中日文，请检查后重新提交');
+				}
+
+				const config = deepCopy(this.config);
+				config.name = name;
+
+				console.log(JSON.stringify(config,0,4));
+				this.configs.push(config);
+				this.saveData();
+			},
+			saveData(){
+				localStorage.setItem('90data',JSON.stringify(app.$data));
+			},
+			_draw(){
+				_reDraw(this.img,this.config,src=>{
+					app.src = src;
+				});
+			},
+			draw(){
+				reDraw(this.img,this.config,src=>{
+					app.src = src;
+				});
+			},
+			setImageAndDraw(e){
+				this.img = e.target;
+
+				this.draw();
+			}
+		},
+		watch:{
+			config:{
+				deep:true,
+				handler(){
+					this._draw();
+				}
+			}
+		}
+	});
+</script>
