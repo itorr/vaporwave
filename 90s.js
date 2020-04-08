@@ -54,7 +54,7 @@ const reDraw = (img,config,callback)=>{
 
 	const configString = JSON.stringify(config)+img.src;
 
-	if(lastConfigString === configString)return;
+	if(lastConfigString === configString) return;
 
 	lastConfigString = configString;
 
