@@ -48,7 +48,6 @@ let scale  = width / height;
 
 
 
-let lastShowPixel = null;
 let lastConfigString = null;
 const reDraw = (img,config,callback)=>{
 	if(!img || !config) return;
@@ -86,6 +85,7 @@ const reDraw = (img,config,callback)=>{
 	scale = width / height;
 
 
+
 	canvas.width = width;
 	canvas.height = height;
 
@@ -104,6 +104,9 @@ const reDraw = (img,config,callback)=>{
 
 
 	if(config.fit === 'cover'){
+
+		scale = scale * config.ratio;
+
 		if(oriScale > scale){
 			cutLeft = ( oriWidth - oriHeight * scale )/2;
 			calcWidth = oriHeight * scale;
@@ -113,8 +116,10 @@ const reDraw = (img,config,callback)=>{
 			calcWidth = oriWidth;
 			calcHeight = oriWidth / scale;
 		}
-
 	}else if(config.fit === 'contain'){
+		scale = scale * config.ratio;
+		oriScale = oriScale / config.ratio;
+
 		if(oriScale > scale){ //原图更宽
 			setWidth  = width;
 			setHeight = width / oriScale;
