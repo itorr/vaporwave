@@ -14,12 +14,32 @@ img{
 button,input{
 	font:initial;
 }
+
+
+
+::-webkit-scrollbar-track-piece{
+	background:#ffd9ec;
+}
+::-webkit-scrollbar{
+	width:8px;
+	height:8px;
+}
+::-webkit-scrollbar-thumb{
+	height:40px;
+	background-color:#00a835;
+	border:0;
+}
+::-webkit-scrollbar-thumb:hover{
+	background-color:#ff32bb;
+}
+
+
 .ctrl-box{
 	position: fixed;
 	top:0;
 	left:0;
 	right:0;
-	bottom:120px;
+	bottom:130px;
 }
 .output{
 	height: 480px;
@@ -30,7 +50,7 @@ button,input{
 	top:0;
 	right:300px;
 	bottom:0;
-	left:200px;
+	left:210px;
 }
 .output img{
 	display: inline-block;
@@ -51,6 +71,8 @@ button,input{
 
 	font-size:12px;
 	text-align: left;
+
+	background:#ffd9ec;
 
 }
 
@@ -129,6 +151,8 @@ input[type="range"]{
 	width: 100%;
 	width:calc( 50% - 10px);
 	text-align: center;
+	height:60px;
+	box-sizing: border-box;
 }
 .btn.wire{
 	background:#ffd9ec;
@@ -145,7 +169,7 @@ input[type="range"]{
 	top:0;
 	left:0;
 	bottom:0;
-	width: 220px;
+	width: 210px;
 	overflow: auto;
 }
 h1{
