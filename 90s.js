@@ -64,9 +64,6 @@ const reDraw = (img,config,callback)=>{
 	let oriScale = oriWidth / oriHeight;
 
 
-	console.log(oriWidth, oriHeight);
-
-
 	if(!config.sizeOrigin){
 		width  = 640;
 		height = 480;
@@ -83,8 +80,6 @@ const reDraw = (img,config,callback)=>{
 	height = Math.floor( height / config.zoom );
 
 	scale = width / height;
-
-
 
 	canvas.width = width;
 	canvas.height = height;
@@ -134,10 +129,9 @@ const reDraw = (img,config,callback)=>{
 	}
 
 
-
-	console.log(cutLeft,cutTop);
-	console.log(calcWidth,calcHeight);
-	console.log(setLeft,setTop);
+	// console.log(cutLeft,cutTop);
+	// console.log(calcWidth,calcHeight);
+	// console.log(setLeft,setTop);
 
 
 
@@ -197,6 +191,28 @@ const reDraw = (img,config,callback)=>{
 		// }
 
 	}else{
+
+		const UVshifting = (yuv)=>{
+
+			const levelLower = num=>Math.round(num / config.level) * config.level;
+
+			yuv[0] = ((yuv[0] - 128)*config.contrast + 128);
+
+			yuv[0] = yuv[0] * config.light;
+
+			yuv[0] = Math.max(yuv[0],config.darkFade);
+			yuv[0] = Math.min(yuv[0],255-config.brightFade);
+
+
+			yuv[1] = Math.min(255, (yuv[1]-128) * config.vividU + config.shiftU + 128 );
+			yuv[2] = Math.min(255, (yuv[2]-128) * config.vividV + config.shiftV + 128 );
+
+			yuv[1] = levelLower(yuv[1]);
+			yuv[2] = levelLower(yuv[2]);
+			return yuv;
+		};
+
+
 		for(let i = 0;i < pixelData.length;i += 4){
 			let yuv = rgb2yuv(
 				pixelData[i  ],
@@ -215,7 +231,6 @@ const reDraw = (img,config,callback)=>{
 	}
 
 	if(config.yuv420){
-		// 420 压缩
 		const p = 4;
 		const s = Math.sqrt(p);
 		let maxX = Math.floor(width/s);
@@ -317,37 +332,34 @@ const reDraw = (img,config,callback)=>{
 	ctx.putImageData(pixel,0,0);
 
 
-	canvas.toBlob(blob=>{
-		// console.log(blob);
-		// blob = blob.slice(0,blob.size-config.damage);
-		callback(URL.createObjectURL(blob));
+	const src = canvas.toDataURL('image/jpeg',config.quality);
+	if(config.zoom !== 1 && !config.sizeOrigin){
+		imageResizeByWidth(src,config,callback)
+	}else{
+		callback(src);
+	}
 
-	},'image/jpeg',config.quality);
 
-	// callback(canvas.toDataURL('image/jpeg',config.quality));
+
+	// callback();
 };
 
 
-const UVshifting = (yuv,config)=>{
-
-	const levelLower = num=>Math.round(num / config.level) * config.level;
-
-	//对比度
-	yuv[0] = ((yuv[0] - 128)*config.contrast + 128);
-
-	//亮度
-	yuv[0] = yuv[0] * config.light;
-
-	yuv[0] = Math.max(yuv[0],config.darkFade);
-	yuv[0] = Math.min(yuv[0],255-config.brightFade);
+const imageResizeByWidth = (src,config,callback)=>{
+	const canvas = document.createElement('canvas');
+	const ctx = canvas.getContext('2d');
 
 
-	yuv[1] = Math.min(255, (yuv[1]-128) * config.vividU + config.shiftU + 128 );
-	yuv[2] = Math.min(255, (yuv[2]-128) * config.vividV + config.shiftV + 128 );
+	canvas.width  = 640;
+	canvas.height = 480;
 
-	yuv[1] = levelLower(yuv[1]);
-	yuv[2] = levelLower(yuv[2]);
-	return yuv;
+	const img = new Image();
+
+	img.onload = function(){
+		ctx.drawImage(img,0,0,canvas.width,canvas.height);
+		callback(canvas.toDataURL('image/jpeg',config.quality));
+	};
+	img.src = src;
 };
 
 
