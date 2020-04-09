@@ -163,19 +163,6 @@ input[type="radio"]{
 }
 .btn-box{
 	padding:2px 0 0;
-	overflow: hidden;
-}
-.btn-box:before{
-	content: '';
-
-	position: absolute;
-	pointer-events: none;
-	height:40px;
-	left:0;
-	right:0;
-	bottom:100%;
-
-	background: linear-gradient(rgba(255, 217, 236, 0), #ffd9ec);
 }
 .btn{
 	float: left;
@@ -307,11 +294,25 @@ input[type="file"]{
 		bottom:0;
 		right:0;
 		left:0;
+		z-index:1;
 
 		padding:5px 0 0 0;
 		background:#ffd9ec;
 	}
 
+	.btn-box:before{
+		content: '';
+
+		position: absolute;
+		pointer-events: none;
+		height:40px;
+		left:0;
+		right:0;
+		bottom:100%;
+		z-index:1;
+
+		background: linear-gradient(rgba(255, 217, 236, 0), #ffd9ec);
+	}
 
 
 
@@ -357,7 +358,8 @@ input[type="file"]{
 		height:auto;
 	}
 	.btn-box{
-		padding-left:10px;
+		overflow: hidden;
+		padding:30px 0 10px 10px;
 	}
 	.img-list{
 		padding-top:0px;

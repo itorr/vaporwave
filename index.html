@@ -43,6 +43,13 @@
 			     @load="index===0&&setImageAndDraw($event)">
 		</div>
 		<div class="side-right-box">
+			<div class="btn-box">
+				<label>
+					<a class="btn big wire">打开图像</a>
+					<input type="file" @change="chooseFile">
+				</label>
+				<button @click="output()" class="btn big">导出图像</button>
+			</div>
 			<div class="config" v-if="showConfig">
 				<div class="group">
 					<div class="body content">
@@ -320,18 +327,8 @@
 						</div>
 					</div>
 				</div>
-
-
-
 			</div>
 
-			<div class="btn-box">
-				<label>
-					<a class="btn big wire">打开图像</a>
-					<input type="file" @change="chooseFile">
-				</label>
-				<button @click="output()" class="btn big">导出图像</button>
-			</div>
 
 		</div>
 	</div>
