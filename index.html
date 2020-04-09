@@ -8,26 +8,35 @@
 	<div class="ctrl-box">
 
 		<!--<label>-->
-			<!--<input type="checkbox" v-model="showConfig">选项-->
+			<!--<input type="checkbox" v-model="showStyle">选项-->
 		<!--</label>-->
 		<div class="side-left-box">
 			<h1>蒸 気 機</h1>
-			<div class="config-list-box">
-				<div class="global-config-list">
-					<a v-for="_config in configs"
-					   :class="{active:_config.name === config.name}"
-					   @click="setConfig(_config)">
-						<span class="name" v-text="_config.name"></span>
-						<span class="cor vote" @click.stop.prevent="voteConfig(_config)"></span>
+			<div class="style-list-box">
+				<div class="global-style-list">
+					<a v-for="_style in styles"
+					   :class="{active:_style.name === style.name}"
+					   @click="setStyle(_style)">
+						<span class="name" v-text="_style.name"></span>
+						<span class="cor vote" @click.stop.prevent="voteStyle(_style)"></span>
 					</a>
 				</div>
-				<div class="user-config-list" v-if="userConfigs.length">
+				<div class="user-style-list" v-if="userStyles.length">
 					<h4>个人预设</h4>
-					<a v-for="_config in userConfigs"
-					   :class="{active:_config.name === config.name}"
-					   @click="setConfig(_config)">
-						<span class="name" v-text="_config.name"></span>
-						<span class="cor remove" @click.stop.prevent="removeUserConfig(_config)"></span>
+					<a v-for="_style in userStyles"
+					   :class="{active:_style.name === style.name}"
+					   @click="setStyle(_style)">
+						<span class="name" v-text="_style.name"></span>
+						<span class="cor remove" @click.stop.prevent="removeUserStyle(_style)"></span>
+					</a>
+				</div>
+				<div class="user-style-list" v-if="userStyles.length">
+					<h4>公共预设</h4>
+					<a v-for="_style in globalStyles"
+					   :class="{active:_style.name === style.name}"
+					   @click="setStyle(_style)">
+						<span class="name" v-text="_style.name"></span>
+						<span class="cor remove" @click.stop.prevent="removeUserStyle(_style)"></span>
 					</a>
 				</div>
 
@@ -51,7 +60,7 @@
 				</label>
 				<button @click="output()" class="btn big">导出图像</button>
 			</div>
-			<div class="config" v-if="showConfig">
+			<div class="style" v-if="showStyle">
 				<div class="group">
 					<div class="body content">
 						<h2>📹「 蒸 気 機 」</h2>
@@ -73,16 +82,16 @@
 							<del>根据 EXIF 旋转图像功能还没写。</del>
 						</p>
 
-						<p>大家在摸索到理想的画面风格时，可以通过 <b class="line">提交成为公共预设</b> 功能分享预设给大家。</p>
+						<p>大家在摸索到理想的画面风格时，可以通过 <b class="line cur" @click="postStyle">提交成为公共预设</b> 功能分享预设给大家。</p>
 						<p>
 							<span class="line">预设名称限制为 <b title="/^[\u0800-\u9fa5]+$/">四字中日文</b> <del>不需要加空格</del>，</span>
 							<span class="line">提交的预设经审核通过即可显示。</span>
 						</p>
 						<p>
 							如需高质量影像，可勾选
-							<label><input type="checkbox" v-model="config.sizeOrigin">原始尺寸处理</label>
+							<label><input type="checkbox" v-model="style.sizeOrigin">原始尺寸处理</label>
 						</p>
-						<p>有适合当样图的影像可以 <b>点这里上传</b> 授权我！</p>
+						<p>有适合当样图的影像可以 <b class="line cur" @click="uploadCapture">点这里上传</b> 授权我！</p>
 						<p>
 							有适合抽象的概念可以和我说，不一定能做 🤔<br>
 							有什么建议都可以和我说，不一定听 😠
@@ -102,30 +111,30 @@
 						<div class="label-box">
 							<div class="head">
 								<b>画面亮度</b>
-								<span v-text="config.light"></span>
+								<span v-text="style.light"></span>
 							</div>
-							<input type="range" v-model.number="config.light"  min="0" max="4" step="0.01">
+							<input type="range" v-model.number="style.light"  min="0" max="4" step="0.01">
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>画面反差</b>
-								<span v-text="config.contrast"></span>
+								<span v-text="style.contrast"></span>
 							</div>
-							<input type="range" v-model.number="config.contrast"  min="0" max="4" step="0.01">
+							<input type="range" v-model.number="style.contrast"  min="0" max="4" step="0.01">
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>暗部褪色</b>
-								<span v-text="config.darkFade"></span>
+								<span v-text="style.darkFade"></span>
 							</div>
-							<input type="range" v-model.number="config.darkFade"  min="0" max="128" step="1">
+							<input type="range" v-model.number="style.darkFade"  min="0" max="128" step="1">
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>亮部褪色</b>
-								<span v-text="config.brightFade"></span>
+								<span v-text="style.brightFade"></span>
 							</div>
-							<input type="range" v-model.number="config.brightFade"  min="0" max="128" step="1">
+							<input type="range" v-model.number="style.brightFade"  min="0" max="128" step="1">
 						</div>
 					</div>
 				</div>
@@ -137,37 +146,37 @@
 						<div class="label-box">
 							<div class="head">
 								<b>紫鲜艳度</b>
-								<span v-text="config.vividU"></span>
+								<span v-text="style.vividU"></span>
 							</div>
-							<input type="range" v-model.number="config.vividU" min=".1" max="2" step="0.01">
+							<input type="range" v-model.number="style.vividU" min=".1" max="2" step="0.01">
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>青鲜艳度</b>
-								<span v-text="config.vividV"></span>
+								<span v-text="style.vividV"></span>
 							</div>
-							<input type="range" v-model.number="config.vividV" min=".1" max="2" step="0.01">
+							<input type="range" v-model.number="style.vividV" min=".1" max="2" step="0.01">
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>紫色偏移</b>
-								<span v-text="config.shiftU"></span>
+								<span v-text="style.shiftU"></span>
 							</div>
-							<input type="range" v-model.number="config.shiftU" min="-200" max="200" step="1">
+							<input type="range" v-model.number="style.shiftU" min="-200" max="200" step="1">
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>青色偏移</b>
-								<span v-text="config.shiftV"></span>
+								<span v-text="style.shiftV"></span>
 							</div>
-							<input type="range" v-model.number="config.shiftV" min="-200" max="200" step="1">
+							<input type="range" v-model.number="style.shiftV" min="-200" max="200" step="1">
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>色彩断层</b>
-								<span v-text="config.level"></span>
+								<span v-text="style.level"></span>
 							</div>
-							<input type="range" v-model.number="config.level"  min="1" max="255" step="1">
+							<input type="range" v-model.number="style.level"  min="1" max="255" step="1">
 						</div>
 
 					</div>
@@ -180,57 +189,57 @@
 						<div class="label-box">
 							<div class="head">
 								<b>横向偏移</b>
-								<span v-text="config.shiftX"></span>
+								<span v-text="style.shiftX"></span>
 							</div>
-							<input type="range" v-model.number="config.shiftX" min="0" max="1000" step="1">
+							<input type="range" v-model.number="style.shiftX" min="0" max="1000" step="1">
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>纵向偏移</b>
-								<span v-text="config.shiftY"></span>
+								<span v-text="style.shiftY"></span>
 							</div>
-							<input type="range" v-model.number="config.shiftY" min="0" max="1000" step="1">
+							<input type="range" v-model.number="style.shiftY" min="0" max="1000" step="1">
 						</div>
 
 
 						<div class="label-box">
 							<div class="head">
 								<b>信息置换</b>
-								<span v-text="config.replace"></span>
+								<span v-text="style.replace"></span>
 							</div>
-							<input type="range" v-model.number="config.replace" min="0" max="3" step="1">
+							<input type="range" v-model.number="style.replace" min="0" max="3" step="1">
 						</div>
 						<!--
 						<div class="label-box">
 							<div class="head">
 								<b>信号偏移</b>
-								<span v-text="config.yuv420Noise"></span>
+								<span v-text="style.yuv420Noise"></span>
 							</div>
-							<input type="range" v-model.number="config.yuv420Noise" min="1" max="2" step="0.01">
+							<input type="range" v-model.number="style.yuv420Noise" min="1" max="2" step="0.01">
 						</div>
 						-->
 						<!--<div class="label-box">-->
 							<!--<div class="head">-->
 								<!--<b>整倍偏移</b>-->
-								<!--<span v-text="config.yuv420Noise"></span>-->
+								<!--<span v-text="style.yuv420Noise"></span>-->
 							<!--</div>-->
-							<!--<input type="range" v-model.number="config.yuv420Noise" min="1" max="8" step="1">-->
+							<!--<input type="range" v-model.number="style.yuv420Noise" min="1" max="8" step="1">-->
 						<!--</div>-->
 
 						<div class="label-box">
 							<div class="head">
 								<b>像素合并</b>
-								<span v-text="config.zoom"></span>
+								<span v-text="style.zoom"></span>
 							</div>
-							<input type="range" v-model.number="config.zoom"   min="1" max="20" step="0.01">
+							<input type="range" v-model.number="style.zoom"   min="1" max="20" step="0.01">
 						</div>
 
 						<div class="label-box">
 							<div class="head">
 								<b>隔行扫描</b>
-								<span v-text="config.interlaced"></span>
+								<span v-text="style.interlaced"></span>
 							</div>
-							<input type="range" v-model.number="config.interlaced" min="0" max="8" step="1">
+							<input type="range" v-model.number="style.interlaced" min="0" max="8" step="1">
 						</div>
 
 
@@ -238,23 +247,23 @@
 						<div class="label-box">
 							<div class="head">
 								<b>信号质量</b>
-								<span v-text="config.quality"></span>
+								<span v-text="style.quality"></span>
 							</div>
-							<input type="range" v-model.number="config.quality" min="0" max="1" step="0.05">
+							<input type="range" v-model.number="style.quality" min="0" max="1" step="0.05">
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>信号噪声</b>
-								<span v-text="config.lightNoise"></span>
+								<span v-text="style.lightNoise"></span>
 							</div>
-							<input type="range" v-model.number="config.lightNoise" min="0" max="500" step="1">
+							<input type="range" v-model.number="style.lightNoise" min="0" max="500" step="1">
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>胶片颗粒</b>
-								<span v-text="config.darkNoise"></span>
+								<span v-text="style.darkNoise"></span>
 							</div>
-							<input type="range" v-model.number="config.darkNoise" min="0" max="500" step="1">
+							<input type="range" v-model.number="style.darkNoise" min="0" max="500" step="1">
 						</div>
 					</div>
 				</div>
@@ -268,38 +277,38 @@
 							<b>原始尺寸</b>
 
 							<label>
-								<input type="checkbox" v-model="config.sizeOrigin">原始尺寸处理（性能差）
+								<input type="checkbox" v-model="style.sizeOrigin">原始尺寸处理（性能差）
 							</label>
 						</div>
 						<div class="label-box" style="padding:10px 0;">
 							<b>拉伸方案</b>
 							<label>
-								<input type="radio" v-model="config.fit" value="cover" :disabled="config.sizeOrigin">填充
+								<input type="radio" v-model="style.fit" value="cover" :disabled="style.sizeOrigin">填充
 							</label>
 							<label>
-								<input type="radio" v-model="config.fit" value="contain" :disabled="config.sizeOrigin">完整
+								<input type="radio" v-model="style.fit" value="contain" :disabled="style.sizeOrigin">完整
 							</label>
 							<label>
-								<input type="radio" v-model="config.fit" value="fill" :disabled="config.sizeOrigin">拉伸
+								<input type="radio" v-model="style.fit" value="fill" :disabled="style.sizeOrigin">拉伸
 							</label>
 						</div>
 						<div class="label-box">
 							<div class="label-box">
 								<div class="head">
 									<b>比例变形</b>
-									<span v-text="config.ratio"></span>
+									<span v-text="style.ratio"></span>
 								</div>
-								<input type="range" v-model.number="config.ratio"
+								<input type="range" v-model.number="style.ratio"
 								       min="0.5" max="2" step="0.1"
-								       :disabled="config.fit==='fill'">
+								       :disabled="style.fit==='fill'">
 							</div>
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>边缘偏差</b>
-								<span v-text="config.border"></span>
+								<span v-text="style.border"></span>
 							</div>
-							<input type="range" v-model.number="config.border" min="0" max="30" step="0.1">
+							<input type="range" v-model.number="style.border" min="0" max="30" step="0.1">
 						</div>
 					</div>
 				</div>
@@ -312,18 +321,18 @@
 					<div class="body">
 						<div class="label-box" style="padding:0 0 10px 0;">
 							<label>
-								<input type="checkbox" v-model="config.watermark">显示蒸汽机水印
+								<input type="checkbox" v-model="style.watermark">显示蒸汽机水印
 							</label>
 							<label>
-								<input type="checkbox" v-model="config.styleName">显示预设名
+								<input type="checkbox" v-model="style.styleName">显示预设名
 							</label>
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>盖印比例</b>
-								<span v-text="config.watermarkSize"></span>
+								<span v-text="style.watermarkSize"></span>
 							</div>
-							<input type="range" v-model.number="config.watermarkSize" min="0.3" max="1.5" step="0.01">
+							<input type="range" v-model.number="style.watermarkSize" min="0.3" max="1.5" step="0.01">
 						</div>
 					</div>
 				</div>
@@ -335,19 +344,19 @@
 
 						<div class="label-box" style="padding:4px 0;">
 							<label>
-								<input type="checkbox" v-model="config.sharpen">强调线条
+								<input type="checkbox" v-model="style.sharpen">强调线条
 							</label>
 							<label>
-								<input type="checkbox" v-model="config.snow">切断信号
+								<input type="checkbox" v-model="style.snow">切断信号
 							</label>
 							<label>
-								<input type="checkbox" v-model="config.invertLight">颠倒黑白
+								<input type="checkbox" v-model="style.invertLight">颠倒黑白
 							</label>
 						</div>
 						<!--
 						<div class="label-box" style="padding:4px 0;">
 							<label>
-								<input type="checkbox" v-model="config.none">对比原图
+								<input type="checkbox" v-model="style.none">对比原图
 							</label>
 						</div>
 						-->
@@ -359,16 +368,14 @@
 						<!--<h3>水印設置</h3>-->
 					<!--</div>-->
 					<div class="body">
-						<div class="label-box config-ctrl-box">
-							<button @click="addConfig()" class="btn wire">创建个人预设</button>
-							<button class="btn wire">提交成为公共预设</button>
+						<div class="label-box style-ctrl-box">
+							<button @click="addStyle" class="btn wire">创建个人预设</button>
+							<button @click="postStyle" class="btn wire">提交成为公共预设</button>
 						</div>
 					</div>
 				</div>
 
 			</div>
-
-
 		</div>
 	</div>
 
@@ -376,236 +383,6 @@
 
 <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
 <script src="vaporwave.js"></script>
-<script src="configs.js"></script>
+<script src="styles.js"></script>
 <script src="images.js"></script>
-<script>
-
-	const readFileToURL = (file,onOver)=>{
-		var reader = new FileReader();
-		reader.onload = ()=>{
-			const src = reader.result;
-			onOver(src);
-		};
-		reader.readAsDataURL(file);
-	};
-
-	const readFileAndSetIMGSrc = file=>{
-		readFileToURL(file,src=>{
-			const img = new Image();
-			img.src = src;
-			img.onload = ()=>{
-				app.img = img;
-				vaporwave(img,app.config, src=>{
-					app.src = src;
-				});
-			}
-		});
-	};
-
-	const isImageRegex = /^image\/(jpeg|gif|png|bmp|webp)$/;
-
-	document.addEventListener('paste',e=>{
-		console.log(e.clipboardData,e.clipboardData.files);
-
-		const clipboardData = e.clipboardData;
-		if(clipboardData.items[0]){
-			let file = clipboardData.items[0].getAsFile();
-
-			if(file && isImageRegex.test(file.type)){
-				return readFileAndSetIMGSrc(file);
-			}
-		}
-
-		if(clipboardData.files.length){
-			for(let i = 0;i<clipboardData.files.length;i++){
-				if(isImageRegex.test(clipboardData.files[i].type)){
-					console.log(clipboardData.files[i])
-					readFileAndSetIMGSrc(clipboardData.files[i]);
-				}
-			}
-		}
-	});
-
-	document.addEventListener('dragover',e=>{
-		e.preventDefault();
-	});
-	document.addEventListener('drop',e=>{
-		e.preventDefault();
-
-		const file = e.dataTransfer.files[0];
-
-		if(file && file.type.match(isImageRegex)){
-			readFileAndSetIMGSrc(file);
-		}
-	});
-
-	const _vaporwave = (img,config,callback)=>{
-
-		clearTimeout(vaporwave.T);
-		vaporwave.T = setTimeout(()=>{
-			vaporwave(img,config,callback);
-			app.saveData();
-		},100);
-	};
-
-	const deepCopy = o=>JSON.parse(JSON.stringify(o));
-
-	const defaultConfig = {
-
-		zoom: 1,
-
-		light: 1,
-		contrast: 1,
-
-		darkFade:0,
-		brightFade:0,
-
-		shiftX: 0,
-		shiftY: 0,
-
-		shiftU: 0,
-		shiftV: 0,
-
-
-		level: 4, //颜色断层
-
-		interlaced: 0, //隔行扫描
-		interlacedStrong:1,
-
-		replace:0,
-
-		vividU : 1,
-		vividV : 1,
-
-		sizeOrigin: false,
-		sharpen: true,
-		invertLight: false,
-
-		yuv420:true,
-		yuv420Noise:1,
-
-		snow:false,
-		quality:0.6,
-		damage:0,
-
-		ratio:1,
-
-
-		lightNoise:0, //明度噪声
-		darkNoise:0, //胶片噪声
-
-		fit:'cover',
-
-		border:0,
-
-		none:false,
-
-		watermark:false,
-		watermarkSize:0.7,
-
-		styleName:false,
-
-	};
-
-
-
-	const userConfigs = JSON.parse(localStorage.getItem('userConfigs')||'[]');
-
-	const data = {
-		src:'',
-		img:null,
-		showConfig:true,
-		config:{
-			...defaultConfig,
-			...configs[0]
-		},
-		configs,
-		userConfigs,
-		images
-	};
-
-	const isKanjiRegex = /^[\u0800-\u9fa5]+$/;
-
-	const app = new Vue({
-		el:'.app',
-		data,
-		methods: {
-			setConfig(config){
-				this.config = deepCopy({
-					...defaultConfig,
-					...config
-				});
-				this.vaporwave();
-			},
-			addConfig(){
-				const name = prompt('输入四字中日文滤镜名（务必是四个中日文字）');
-				if(!name){
-					return;
-				}
-				if(!isKanjiRegex.test(name.trim())){
-					return alert('这不是四字中日文，请检查后重新提交');
-				}
-
-				const config = deepCopy(this.config);
-				config.name = name;
-
-				console.log(JSON.stringify(config,0,4));
-				this.userConfigs.push(config);
-				this.saveData();
-			},
-			removeUserConfig(config){
-				if(confirm('确定删除这条预设？删除后不可恢复')){
-					this.userConfigs.splice(this.userConfigs.indexOf(config),1);
-				}
-				this.saveData();
-			},
-			saveData(){
-				localStorage.setItem('userConfigs',JSON.stringify(app.userConfigs));
-			},
-			_vaporwave(){
-				_vaporwave(this.img,this.config,src=>{
-					app.src = src;
-				});
-			},
-			vaporwave(){
-				vaporwave(this.img,this.config, src=>{
-					app.src = src;
-				});
-			},
-			setImageAndDraw(e){
-				this.img = e.target;
-
-				this.vaporwave();
-			},
-			output(){
-				const a = document.createElement('a');
-				a.href = this.src;
-				a.download = `[lab.magiconch.com][90s-time-machine]-${+Date.now()}.jpg`;
-				a.click();
-			},
-			chooseFile(e){
-				if(e.target.files.length){
-					readFileAndSetIMGSrc(e.target.files[0]);
-				}
-			}
-		},
-		watch:{
-			config:{
-				deep:true,
-				handler(){
-					this._vaporwave();
-				}
-			}
-		}
-	});
-
-	const loadScript = (src,el) =>{
-		el = document.createElement('script');
-		el.src = src;
-		document.body.appendChild(el);
-	};
-
-	setTimeout(()=>{
-		loadScript('//s4.cnzz.com/z_stat.php?id=1278706389&web_id=1278706389');
-	},400);
-</script>
+<script src="document.js"></script>

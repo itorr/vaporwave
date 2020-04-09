@@ -1,3 +1,9 @@
+/**
+ * @author itorr<https://github.com/itorr>
+ * @date 2020-04-08
+ * @Description 蒸汽波风格化处理
+ * */
+
 const rgb2yuv = (r,g,b)=>{
 	var y, u, v;
 
@@ -207,7 +213,7 @@ const vaporwave = (img, config, callback)=>{
 			const linex = 2 * 4 * width;
 
 			for(let i = 0;i < pixelData.length;i += 4){
-				pixelData[i                 ] = randRange(0,25)*10;//Math.floor(i / (config.light+1)/1000 % 200) + randRange(0,55);
+				pixelData[i                 ] = randRange(0,25)*10;//Math.floor(i / (style.light+1)/1000 % 200) + randRange(0,55);
 				pixelData[i+1 - shiftUPixel ] = randRange(108,148);//randRange(68,188);
 				pixelData[i+2 - shiftVPixel ] = randRange(118,138);
 				pixelData[i+3 - shiftVPixel ] = 255;
