@@ -366,3 +366,22 @@ input[type="file"]{
 		padding:10px 20px;
 	}
 }
+
+@media (max-width:500px){
+	.config-list-box a{
+		width: 33.33%;
+		box-sizing:border-box;
+	}
+}
+
+@media (max-width:370px){
+	.config-list-box a{
+		font-size:14px;
+		line-height: 30px;
+		padding:0 30px 0 12px;
+
+	}
+	.config-list-box a .cor{
+		width: 30px;
+	}
+}
