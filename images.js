@@ -32,7 +32,6 @@ const images = [
 
 	'//magiconch.syouzyo.org/90s/captures/1300101534.jpg',
 	'//magiconch.syouzyo.org/90s/captures/1300105873.jpg',
-	'//magiconch.syouzyo.org/90s/captures/1300106089.jpg',
 	'//magiconch.syouzyo.org/90s/captures/1300155244.jpg',
 	'//magiconch.syouzyo.org/90s/captures/1300155353.jpg',
 	'//magiconch.syouzyo.org/90s/captures/1300866289.jpg',
@@ -76,7 +75,6 @@ const images = [
 	'//magiconch.syouzyo.org/90s/captures/IMG_9725.JPG',
 	'//magiconch.syouzyo.org/90s/captures/kon-01.jpg',
 	'//magiconch.syouzyo.org/90s/captures/lain.jpg',
-	'//magiconch.syouzyo.org/90s/captures/nausic-01.jpg',
 	'//magiconch.syouzyo.org/90s/captures/orei-01.jpg',
 	'//magiconch.syouzyo.org/90s/captures/toari-01.jpg'
 ]
