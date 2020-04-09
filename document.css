@@ -34,6 +34,9 @@ button,input{
 }
 
 
+html{
+	overflow: hidden;
+}
 .ctrl-box{
 	position: fixed;
 	top:0;
@@ -42,15 +45,17 @@ button,input{
 	bottom:130px;
 }
 .output{
-	height: 480px;
-	margin:auto;
-	text-align: center;
 
 	position: absolute;
 	top:0;
 	right:300px;
 	bottom:0;
 	left:210px;
+
+	height: 480px;
+	margin:auto;
+	text-align: center;
+
 }
 .output img{
 	display: inline-block;
@@ -113,16 +118,29 @@ button,input{
 	float: right;
 	color:#ff32bb;
 }
+
+.config .config-ctrl-box{
+	padding:20px 0;
+	overflow: hidden;
+}
+
 input[type="range"]{
 	width: 100%;
 	margin:0;
 
 }
-
+input[type="checkbox"],
+input[type="radio"]{
+	display: inline-block;
+	vertical-align: middle;
+	margin-top:-3px;
+}
 .btn-box{
-	padding:5px 0 0 10px;
+	padding:5px 0 0 0;
 	position: absolute;
 	bottom:0;
+	right:0;
+	left:0;
 	background:#ffd9ec;
 }
 .btn-box:before{
@@ -139,20 +157,28 @@ input[type="range"]{
 }
 .btn{
 	float: left;
-	font-size:2em;
-	margin:0 10px 10px 0;
 	background:#00a835;
 	color:#ffd9ec;
 	border:0;
-	padding:15px 0;
 	cursor: pointer;
 	outline:none;
 	user-select:none;
-	width: 100%;
-	width:calc( 50% - 10px);
+	margin:0 6px 6px 0;
+
+	font-size:14px;
+	padding:8px 12px;
+
 	text-align: center;
-	height:60px;
 	box-sizing: border-box;
+}
+.btn.big{
+
+	font-size:2em;
+	line-height: 30px;
+	height:60px;
+	margin:0 10px 10px 0;
+	padding:15px 0;
+	width:calc( 50% - 10px);
 }
 .btn.wire{
 	background:#ffd9ec;
@@ -161,6 +187,12 @@ input[type="range"]{
 }
 .btn:active{
 	box-shadow: 4px -2px 0 #ff32bb;
+}
+.btn.wire:active{
+
+	box-shadow:
+			0 0 0 2px #00a835 inset,
+			4px -2px 0 #ff32bb;
 }
 
 

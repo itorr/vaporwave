@@ -153,6 +153,8 @@ const reDraw = (img,config,callback)=>{
 		setWidth,setHeight
 	);
 
+	if(config.none) return imageOutput(canvas,config,callback);
+
 	if(config.sharpen)
 		sharpen();
 	// return;
@@ -332,20 +334,24 @@ const reDraw = (img,config,callback)=>{
 	ctx.putImageData(pixel,0,0);
 
 
-	const src = canvas.toDataURL('image/jpeg',config.quality);
-	if(config.zoom !== 1 && !config.sizeOrigin){
-		imageResizeByWidth(src,config,callback)
-	}else{
-		callback(src);
-	}
+	imageOutput(canvas,config,callback);
 
 
 
 	// callback();
 };
 
+const imageOutput = (canvas,config,callback)=>{
 
-const imageResizeByWidth = (src,config,callback)=>{
+	const src = canvas.toDataURL('image/jpeg',config.quality);
+	if(config.zoom !== 1 && !config.sizeOrigin){
+		imageResizeOutput(src,config,callback)
+	}else{
+		callback(src);
+	}
+};
+
+const imageResizeOutput = (src,config,callback)=>{
 	const canvas = document.createElement('canvas');
 	const ctx = canvas.getContext('2d');
 

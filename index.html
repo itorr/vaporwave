@@ -201,31 +201,42 @@
 						<h3>变形设置</h3>
 					</div>
 					<div class="body">
+						<div class="label-box" style="padding:0 0 6px 0;">
+							<b>原始尺寸</b>
+
+							<label>
+								<input type="checkbox" v-model="config.sizeOrigin">原始尺寸处理（性能差）
+							</label>
+						</div>
+						<div class="label-box" style="padding:10px 0;">
+							<b>拉伸方案</b>
+							<label>
+								<input type="radio" v-model="config.fit" value="cover" :disabled="config.sizeOrigin">填充
+							</label>
+							<label>
+								<input type="radio" v-model="config.fit" value="contain" :disabled="config.sizeOrigin">完整
+							</label>
+							<label>
+								<input type="radio" v-model="config.fit" value="fill" :disabled="config.sizeOrigin">拉伸
+							</label>
+						</div>
+						<div class="label-box">
+							<div class="label-box">
+								<div class="head">
+									<b>比例变形</b>
+									<span v-text="config.ratio"></span>
+								</div>
+								<input type="range" v-model.number="config.ratio"
+								       min="0.5" max="2" step="0.1"
+								       :disabled="config.fit==='fill'">
+							</div>
+						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>边缘偏差</b>
 								<span v-text="config.border"></span>
 							</div>
 							<input type="range" v-model.number="config.border" min="0" max="10" step="0.1">
-						</div>
-						<div class="label-box" style="padding:4px 0;">
-							<div class="label-box">
-								<div class="head">
-									<b>比例变形</b>
-									<span v-text="config.ratio"></span>
-								</div>
-								<input type="range" v-model.number="config.ratio" min="0.5" max="2" step="0.1">
-							</div>
-							<b>拉伸方案</b>
-							<label>
-								<input type="radio" v-model="config.fit" value="cover">填充
-							</label>
-							<label>
-								<input type="radio" v-model="config.fit" value="contain">完整
-							</label>
-							<label>
-								<input type="radio" v-model="config.fit" value="fill">拉伸
-							</label>
 						</div>
 					</div>
 				</div>
@@ -242,14 +253,22 @@
 								<input type="checkbox" v-model="config.sharpen">强调线条
 							</label>
 							<label>
-								<input type="checkbox" v-model="config.snow">断线
+								<input type="checkbox" v-model="config.snow">切断信号
 							</label>
 							<label>
 								<input type="checkbox" v-model="config.invertLight">颠倒黑白
 							</label>
+						</div>
+						<!--
+						<div class="label-box" style="padding:4px 0;">
 							<label>
-								<input type="checkbox" v-model="config.sizeOrigin">原尺寸
+								<input type="checkbox" v-model="config.none">对比原图
 							</label>
+						</div>
+						-->
+						<div class="label-box config-ctrl-box">
+							<button @click="addConfig()" class="btn wire">创建个人预设</button>
+							<button class="btn wire">提交成为公共预设</button>
 						</div>
 					</div>
 				</div>
@@ -260,12 +279,10 @@
 
 			<div class="btn-box">
 				<label>
-					<a class="btn wire">导入图像</a>
+					<a class="btn big wire">打开图像</a>
 					<input type="file" @change="chooseFile">
 				</label>
-				<button @click="output()" class="btn">导出图像</button>
-				<button @click="addConfig()" class="btn wire">创建预设</button>
-				<!--<button class="btn wire">共享预设</button>-->
+				<button @click="output()" class="btn big">导出图像</button>
 			</div>
 
 		</div>
@@ -380,8 +397,8 @@
 
 		replace:0,
 
-		vividU : 0,
-		vividV : 0,
+		vividU : 1,
+		vividV : 1,
 
 		sizeOrigin: false,
 		sharpen: true,
@@ -403,6 +420,8 @@
 		fit:'cover',
 
 		border:0,
+
+		none:false,
 
 	};
 
@@ -484,6 +503,10 @@
 				"light": 1,
 				fit:'contain'
 			},
+			// {
+			// 	name:'原始影像',
+			// 	none:true
+			// },
 			{
 				"name": "同步失败",
 				"zoom": 3.15,
@@ -553,7 +576,7 @@
 				"sharpen": true,
 				"yuv420": true,
 				"snow": false,
-				"quality": 0.35,
+				"quality": 0.7,
 				"damage": 0,
 				lightNoise: 40,
 				border:1,
@@ -814,7 +837,6 @@
 		images:[
 			"//magiconch.syouzyo.org/90s/captures/eva01-04.jpg",
 			"//magiconch.syouzyo.org/90s/captures/eva01-01.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva01-02.jpg",
 			"//magiconch.syouzyo.org/90s/captures/eva01-03.jpg",
 			"//magiconch.syouzyo.org/90s/captures/eva01-05.jpg",
 			"//magiconch.syouzyo.org/90s/captures/eva01-06.jpg",
@@ -860,7 +882,6 @@
 			"//magiconch.syouzyo.org/90s/captures/disa-04.jpg",
 			"//magiconch.syouzyo.org/90s/captures/disa-05.jpg",
 			"//magiconch.syouzyo.org/90s/captures/disa-06.jpg",
-			"//magiconch.syouzyo.org/90s/captures/disa-09.jpg",
 			"//magiconch.syouzyo.org/90s/captures/eden-01.jpg",
 			"//magiconch.syouzyo.org/90s/captures/eureka-01.jpg",
 			"//magiconch.syouzyo.org/90s/captures/gcjjw.jpg",
@@ -875,8 +896,6 @@
 			"//magiconch.syouzyo.org/90s/captures/lain.jpg",
 			"//magiconch.syouzyo.org/90s/captures/nausic-01.jpg",
 			"//magiconch.syouzyo.org/90s/captures/orei-01.jpg",
-			"//magiconch.syouzyo.org/90s/captures/timg-1.jpg",
-			"//magiconch.syouzyo.org/90s/captures/timg.jpg",
 			"//magiconch.syouzyo.org/90s/captures/toari-01.jpg"
 		]
 	};
@@ -914,8 +933,7 @@
 				if(confirm('确定删除这条预设？删除后不可恢复')){
 					this.userConfigs.splice(this.userConfigs.indexOf(config),1);
 				}
-
-				// this.saveData();
+				this.saveData();
 			},
 			saveData(){
 				localStorage.setItem('userConfigs',JSON.stringify(app.userConfigs));
