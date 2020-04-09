@@ -2,6 +2,7 @@
 <meta charset="UTF-8">
 <title>九十年代时光机</title>
 <link rel="stylesheet" href="document.css">
+<meta name="viewport" content="width=device-width,user-scalable=0">
 <div class="app">
 	<div class="ctrl-box">
 
@@ -10,17 +11,22 @@
 		<!--</label>-->
 		<div class="side-left-box">
 			<h1>九十年代时光机📹</h1>
-			<div class="config-list">
-				<a v-for="_config in configs"
-				   :class="{active:_config.name === config.name}"
-				   @click="setConfig(_config)" v-text="_config.name"></a>
+			<div class="config-list-box">
+				<div class="global-config-list">
+					<a v-for="_config in configs"
+					   :class="{active:_config.name === config.name}"
+					   @click="setConfig(_config)">
+						<span v-text="_config.name"></span>
+						<span class="cor vote" @click.stop.prevent="voteConfig(_config)"></span>
+					</a>
+				</div>
 				<div class="user-config-list" v-if="userConfigs.length">
 					<h4>个人预设</h4>
 					<a v-for="_config in userConfigs"
 					   :class="{active:_config.name === config.name}"
 					   @click="setConfig(_config)">
 						<span v-text="_config.name"></span>
-						<span class="remove" @click.stop.prevent="removeUserConfig(_config)"></span>
+						<span class="cor remove" @click.stop.prevent="removeUserConfig(_config)"></span>
 					</a>
 				</div>
 
@@ -45,11 +51,24 @@
 						<p>旨在通过 <b>参数化</b>、<b>可视化</b> 来提升影像风格化的摸索效率。</p>
 						<p>大家在摸索到理想的画面风格时，可以通过 <b class="line">提交成为公共预设</b> 功能分享预设给大家。</p>
 						<p>预设名称限制为 <b title="/^[\u0800-\u9fa5]+$/">四字中日文</b> ，提交的预设经审核通过即可显示。</p>
-						<p>打开的图像不会上传到服务器。</p>
+						<p>
+							选择、粘贴、拖拽截图或者图像文件都可打开，<br>
+							打开的图像不会上传到服务器。<br>
+							<del>根据 EXIF 旋转图像功能还没写。</del>
+						</p>
 						<p>
 							高影像质量需求，可开启
 							<label><input type="checkbox" v-model="config.sizeOrigin">原始尺寸处理</label>
 						</p>
+						<p>有适合当样图的照片可以 <b>点这里上传</b> 授权我！</p>
+						<p>
+							有适合抽象的概念可以和我说，不一定能做 🤔<br>
+							有什么建议都可以和我说，不一定听 😠
+						</p>
+						<p>
+							← 最左面是公共预设列表，现在是我的一些预设<br>
+							↙ 网面下缘是样图列表，可以配合预设预览风格<br>
+							↓ 往下滚动是选项设置列表，最下可保存和分享</p>
 					</div>
 				</div>
 				<div class="group">
@@ -111,14 +130,14 @@
 								<b>紫色偏移</b>
 								<span v-text="config.shiftU"></span>
 							</div>
-							<input type="range" v-model.number="config.shiftU" min="-100" max="100" step="1">
+							<input type="range" v-model.number="config.shiftU" min="-200" max="200" step="1">
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>青色偏移</b>
 								<span v-text="config.shiftV"></span>
 							</div>
-							<input type="range" v-model.number="config.shiftV" min="-100" max="100" step="1">
+							<input type="range" v-model.number="config.shiftV" min="-200" max="200" step="1">
 						</div>
 						<div class="label-box">
 							<div class="head">
@@ -257,7 +276,7 @@
 								<b>边缘偏差</b>
 								<span v-text="config.border"></span>
 							</div>
-							<input type="range" v-model.number="config.border" min="0" max="10" step="0.1">
+							<input type="range" v-model.number="config.border" min="0" max="30" step="0.1">
 						</div>
 					</div>
 				</div>

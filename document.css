@@ -3,13 +3,8 @@ html{
 	color: #00a835;
 	font:400 14px/1.4 sans-serif;
 }
-canvas{
-	width: 640px;
-	height: 480px;
-	background: #333;
-}
-img{
-	height: 480px;
+body{
+	margin:0;
 }
 button,input{
 	font:initial;
@@ -34,9 +29,53 @@ button,input{
 }
 
 
-html{
-	overflow: hidden;
+
+.config-list-box{
+	font-weight: bold;
+	font-size:18px;
 }
+.config-list-box h4{
+	margin:0;
+	font-size:14px;
+	font-style:italic;
+	opacity: .5;
+	padding:30px 0 6px 20px;
+}
+.config-list-box a{
+	line-height: 40px;
+	display: block;
+	cursor: pointer;
+	padding:0 44px 0 20px;
+	position: relative;
+}
+.config-list-box a .cor{
+	position: absolute;
+	right:0;
+	width: 40px;
+	text-align: center;
+}
+.config-list-box a .cor:hover{
+	background:#00a835;
+	color:#ffd9ec;
+}
+.cor.remove:after{
+	content: '✕';
+}
+.cor.vote:after{
+	content: '❤';
+}
+.config-list-box a:hover{
+	box-shadow: 4px -2px 0 #ff32bb;
+	color:#ff32bb;
+}
+.config-list-box a.active{
+	background:#00a835;
+	color: #ffd9ec;
+
+	box-shadow: 4px -2px 0 #ff32bb;
+}
+
+
 
 .content{
 
@@ -47,25 +86,19 @@ html{
 .content p .line{
 	display: inline-block;
 }
-.ctrl-box{
-	position: fixed;
-	top:0;
-	left:0;
-	right:0;
-	bottom:130px;
+.content del{
+	opacity: .3;
 }
-.output{
 
-	position: absolute;
-	top:0;
-	right:300px;
-	bottom:0;
-	left:210px;
+h1{
+	margin:0;
+	padding:20px 0 20px 10px;
 
-	height: 480px;
-	margin:auto;
-	text-align: center;
+	font-weight: 800;
+	font-size:3em;
+	line-height: 1;
 
+	text-shadow:4px -2px 0 #ff32bb;
 }
 .output img{
 	display: inline-block;
@@ -74,32 +107,14 @@ html{
 	object-fit: contain;
 	background: #222;
 }
-
-.side-right-box{
-	position: absolute;
-	right:0;
-	top:0;
-	bottom:0;
-
-	width: 300px;
-
-
+.side-right-box {
 	font-size:12px;
 	text-align: left;
-
 	background:#ffd9ec;
-
 }
 
 .config{
-	position: absolute;
-	top:0;
-	bottom:0;
-	right:0;
-	left:0;
 
-	padding:20px 0 180px;
-	overflow: auto;
 }
 .config .group{
 
@@ -146,12 +161,8 @@ input[type="radio"]{
 	margin-top:-3px;
 }
 .btn-box{
-	padding:5px 0 0 0;
-	position: absolute;
-	bottom:0;
-	right:0;
-	left:0;
-	background:#ffd9ec;
+	padding:2px 0 0;
+	overflow: hidden;
 }
 .btn-box:before{
 	content: '';
@@ -199,91 +210,19 @@ input[type="radio"]{
 	box-shadow: 4px -2px 0 #ff32bb;
 }
 .btn.wire:active{
-
 	box-shadow:
 			0 0 0 2px #00a835 inset,
 			4px -2px 0 #ff32bb;
 }
 
-
-.side-left-box{
-	position: absolute;
-	top:0;
-	left:0;
-	bottom:0;
-	width: 210px;
-	overflow: auto;
-}
-h1{
-	padding:10px 0 10px 10px;
-	font-weight: 800;
-	font-size:3em;
-	width: 4.1em;
-	line-height: 1;
-	text-shadow:4px -2px 0 #ff32bb;
-}
-.config-list{
-	font-weight: bold;
-	font-size:18px;
-	width: 180px;
-	padding:10px 0 100px;
-}
-.config-list h4{
-	margin:0;
-	font-size:14px;
-	font-style:italic;
-	opacity: .5;
-	padding:30px 0 6px 20px;
-}
-.config-list a{
-	line-height: 40px;
-	display: block;
-	cursor: pointer;
-	padding:0 0 0 20px;
-	position: relative;
-}
-.config-list a .remove{
-	position: absolute;
-	right:0;
-	width: 40px;
-	text-align: center;
-}
-.config-list a .remove:hover{
-	background:#00a835;
-	color:#FFF;
-}
-.config-list a .remove:after{
-	content: '✕';
-}
-.config-list a:hover{
-	box-shadow: 4px -2px 0 #ff32bb;
-	color:#ff32bb;
-}
-.config-list a.active{
-	background:#00a835;
-	color: #ffd9ec;
-
-	box-shadow: 4px -2px 0 #ff32bb;
-}
 .label-box{
 	display: block;
 }
-html{
-	padding-bottom:200px;
-}
+
 input[type="file"]{
 	display: none;
 }
-.img-list{
-	position: fixed;
-	bottom:0;
-	left:0;
-	right:0;
-	white-space: nowrap;
-	overflow: auto;
-	font-size:0;
-	background:rgba(0,0,0,.3);
-}
+
 .img-list img{
 	display: inline-block;
 	vertical-align: top;
@@ -295,4 +234,151 @@ input[type="file"]{
 }
 .img-list img:nth-child(even){
 	background:#00a835;
+}
+
+
+
+@media (min-width:1160px){
+	html{
+		overflow: hidden;
+		padding-bottom:200px;
+	}
+	h1{
+		width: 4.5em;
+	}
+
+
+	.side-left-box{
+		position: absolute;
+		top:0;
+		left:0;
+		bottom:0;
+		width: 210px;
+		overflow: auto;
+	}
+
+	.config-list-box{
+		width: 180px;
+		padding:10px 0 100px;
+	}
+
+	.output{
+		position: absolute;
+		top:0;
+		right:300px;
+		bottom:0;
+		left:210px;
+
+		height: 480px;
+		margin:auto;
+		text-align: center;
+
+	}
+
+	.side-right-box {
+		position: absolute;
+		right: 0;
+		top: 0;
+		bottom: 0;
+
+		width: 300px;
+	}
+
+	.config{
+		position: absolute;
+		top:0;
+		bottom:0;
+		right:0;
+		left:0;
+
+		padding:20px 0 120px;
+		overflow: auto;
+	}
+
+	.btn-box{
+		position: absolute;
+		bottom:0;
+		right:0;
+		left:0;
+
+		padding:5px 0 0 0;
+		background:#ffd9ec;
+	}
+
+
+
+
+	.ctrl-box{
+		position: fixed;
+		top:0;
+		left:0;
+		right:0;
+		bottom:130px;
+	}
+
+	.img-list{
+		position: fixed;
+		bottom:0;
+		left:0;
+		right:0;
+		white-space: nowrap;
+		overflow: auto;
+		font-size:0;
+	}
+}
+
+
+
+@media (max-width:1160px){
+	h1{
+		font-size:2em;
+	}
+	.config-list-box{
+		overflow: hidden;
+		padding:2px 0 30px;
+	}
+	.config-list-box h4{
+		float: left;
+		font-size:18px;
+		line-height: 40px;
+		padding:0 10px 0 40px;
+	}
+	.config-list-box a{
+		float: left;
+		line-height: 40px;
+		padding:0 40px 0 10px;
+	}
+
+	.output img{
+		display: block;
+		margin:0 auto;
+		max-width:100%;
+		height:auto;
+	}
+	.btn-box{
+		padding-left:10px;
+	}
+	.img-list{
+		padding-top:30px;
+	}
+	.img-list img{
+		float: left;
+		width:calc(( 100vw - 8px ) / 5);
+		height:calc(( 100vw - 8px ) / 5 / 3 * 2);
+	}
+}
+@media (max-width:900px){
+	.img-list img{
+		float: left;
+		width:calc(( 100vw - 8px ) / 4);
+		height:calc(( 100vw - 8px ) / 4 / 3 * 2);
+	}
+}
+
+@media (max-width:700px){
+	.img-list img{
+		float: left;
+		width:calc(( 100vw - 8px ) / 3);
+		height:calc(( 100vw - 8px ) / 3 / 3 * 2);
+	}
 }
