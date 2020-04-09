@@ -554,4 +554,14 @@
 			}
 		}
 	});
+
+	const loadScript = (src,el) =>{
+		el = document.createElement('script');
+		el.src = src;
+		document.body.appendChild(el);
+	};
+
+	setTimeout(()=>{
+		loadScript('//s4.cnzz.com/z_stat.php?id=1278706389&web_id=1278706389');
+	},400);
 </script>
