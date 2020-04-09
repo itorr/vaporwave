@@ -37,6 +37,16 @@ button,input{
 html{
 	overflow: hidden;
 }
+
+.content{
+
+}
+.content p{
+
+}
+.content p .line{
+	display: inline-block;
+}
 .ctrl-box{
 	position: fixed;
 	top:0;
@@ -88,7 +98,7 @@ html{
 	right:0;
 	left:0;
 
-	padding:40px 0 180px;
+	padding:20px 0 180px;
 	overflow: auto;
 }
 .config .group{

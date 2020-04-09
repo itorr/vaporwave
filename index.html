@@ -9,7 +9,7 @@
 			<!--<input type="checkbox" v-model="showConfig">选项-->
 		<!--</label>-->
 		<div class="side-left-box">
-			<h1>九十年代时光机</h1>
+			<h1>九十年代时光机📹</h1>
 			<div class="config-list">
 				<a v-for="_config in configs"
 				   :class="{active:_config.name === config.name}"
@@ -31,6 +31,27 @@
 		</div>
 		<div class="side-right-box">
 			<div class="config" v-if="showConfig">
+				<div class="group">
+					<div class="body content">
+						<h2>📹「九十年代时光机」</h2>
+						<p>虚拟信号风格化影像后期工具。</p>
+						<p>通过抽象虚拟信号影像展现过程中的各种可能性、实现了九十年代影像风格的重现。</p>
+						<p>
+							全做：<a href="https://weibo.com/reiove" target="_blank">@卜卜口</a>
+							/
+							反馈：<a href="https://github.com/itorr/90s-time-machine/issues" target="_blank">GitHub</a>
+						</p>
+						<p>这是一个寻找影像风格化手段的过程中整理出的产物，没找到理想的工具所以自己整了个轮子。</p>
+						<p>旨在通过 <b>参数化</b>、<b>可视化</b> 来提升影像风格化的摸索效率。</p>
+						<p>大家在摸索到理想的画面风格时，可以通过 <b class="line">提交成为公共预设</b> 功能分享预设给大家。</p>
+						<p>预设名称限制为 <b title="/^[\u0800-\u9fa5]+$/">四字中日文</b> ，提交的预设经审核通过即可显示。</p>
+						<p>打开的图像不会上传到服务器。</p>
+						<p>
+							高影像质量需求，可开启
+							<label><input type="checkbox" v-model="config.sizeOrigin">原始尺寸处理</label>
+						</p>
+					</div>
+				</div>
 				<div class="group">
 					<div class="head">
 						<h3>基础设置</h3>
@@ -288,7 +309,6 @@
 		</div>
 		<div class="img-list">
 			<img v-for="src,index in images"
-			     :class="{active:isActiveImg($el,src)}"
 			     crossOrigin="Anonymous"
 			     :src="src"
 			     @click="setImageAndDraw"
@@ -300,6 +320,8 @@
 
 <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
 <script src="90s.js"></script>
+<script src="configs.js"></script>
+<script src="images.js"></script>
 <script>
 
 	const readFileToURL = (file,onOver)=>{
@@ -372,7 +394,6 @@
 
 	const deepCopy = o=>JSON.parse(JSON.stringify(o));
 
-
 	const defaultConfig = {
 
 		zoom: 1,
@@ -425,479 +446,21 @@
 
 	};
 
-	const configs = [
-			{
-				"name": "愈渐升温",
-				"zoom": 1,
-				"shiftX": 6,
-				"shiftY": 4,
-				"shiftU": -15,
-				"shiftV": 19,
-				"level": 4,
-				"vividU": 0.92,
-				"vividV": 0.74,
-				"light": 0.89,
-			},
-			{
-				"name": "灼热苦夏",
-				"zoom": 1,
-				"shiftX": 4,
-				"shiftY": 4,
-				"shiftU": -15,
-				"shiftV": 40,
-				"level": 4,
-				"vividU": 1.2,
-				"vividV": 1,
-				"light": 0.9,
-			},
-			{
-				"name": "褪色老胶",
-				"zoom": 1.05,
-				"shiftX": 4,
-				"shiftY": 4,
-				"shiftU": 0,
-				"shiftV": 0,
-				"level": 4,
-				"vividU": 0.15,
-				"vividV": 0.1,
-				"light": 2.26,
-				lightNoise:20,
-				darkNoise: 40,
-			},
-			{
-				"name": "隔行扫描",
-				"zoom": 2.4,
-				"light": 1,
-				"contrast": 1,
-				"darkFade": 55,
-				"brightFade": 0,
-				"shiftX": 4,
-				"shiftY": 0,
-				"shiftU": 0,
-				"shiftV": 1,
-				"level": 12,
-				"interlaced": 2,
-				"interlacedStrong": 1,
-				"vividU": 1,
-				"vividV": 1,
-				"sizeOrigin": false,
-				"sharpen": true,
-				"yuv420": true,
-				"yuv420Noise": 1,
-				"snow": false,
-				"quality": 0.6,
-				"damage": 0,
-				ratio:1.2,
-				border:3,
-			},
-			{
-				"name": "数字信号",
-				"zoom": 1,
-				"shiftX": 4,
-				"shiftY": 0,
-				"shiftU": 0,
-				"shiftV": 1,
-				"level": 4,
-				"vividU": 1,
-				"vividV": 1,
-				"light": 1,
-				fit:'contain'
-			},
-			// {
-			// 	name:'原始影像',
-			// 	none:true
-			// },
-			{
-				"name": "同步失败",
-				"zoom": 3.15,
-				"shiftX": 20,
-				"shiftY": 14,
-				"shiftU": 2,
-				"shiftV": -10,
-				"level": 4,
-				"vividU": 0.59,
-				"vividV": 0.48,
-				"light": 1,
-				quality:.3,
-				lightNoise: 20,
-				border:4,
-			},
-			{
-				"name": "信号沉默",
-				"zoom": 2,
-				"light": 1,
-				"shiftX": 4,
-				"shiftY": 0,
-				"shiftU": 1,
-				"shiftV": 1,
-				"level": 4,
-				"vividU": 0.41,
-				"vividV": 0.41,
-				"sizeOrigin": false,
-				"sharpen": true,
-				"yuv420": true,
-				"snow": true,
-				"quality": 1,
-				"damage": 0,
-			},
-			{
-				"zoom": 1,
-				"light": 1.1,
-				"shiftX": 13,
-				"shiftY": 0,
-				"shiftU": -2,
-				"shiftV": 0,
-				"level": 255,
-				"vividU": 0.98,
-				"vividV": 0.97,
-				"sizeOrigin": false,
-				"sharpen": true,
-				"yuv420": true,
-				"snow": false,
-				"quality": 0.4,
-				"damage": 0,
-				"name": "霓虹泛滥"
-			},
-			{
-				"name": "一九零零",
-				"zoom": 1.1,
-				"light": 2.2,
-				"contrast": 0.5,
-				"darkFade": 46,
-				"brightFade": 27,
-				"shiftX": 0,
-				"shiftY": 4,
-				"shiftU": -17,
-				"shiftV": 24,
-				"level": 55,
-				"vividU": 0.1,
-				"vividV": 0.1,
-				"sizeOrigin": false,
-				"sharpen": true,
-				"yuv420": true,
-				"snow": false,
-				"quality": 0.7,
-				"damage": 0,
-				lightNoise: 40,
-				border:1,
-			},
-			{
-				"name": "颜色极端",
-				"zoom": 1,
-				"light": 1.06,
-				"contrast": 0,
-				"darkFade": 14,
-				"brightFade": 0,
-				"shiftX": 647,
-				"shiftY": 1000,
-				"shiftU": 100,
-				"shiftV": -26,
-				"level": 255,
-				"vividU": 0.96,
-				"vividV": 1.56,
-				"sizeOrigin": false,
-				"sharpen": true,
-				"yuv420": true,
-				"snow": false,
-				"ratio": 0.9,
-				"quality": 0.8,
-				"damage": 0,
-			},
-			{
-				"zoom": 1.6,
-				"light": 1.52,
-				"contrast": 2.32,
-				"darkFade": 0,
-				"brightFade": 0,
-				"shiftX": 4,
-				"shiftY": 4,
-				"shiftU": 0,
-				"shiftV": 0,
-				"level": 1,
-				"interlaced": 1,
-				"interlacedStrong": 1,
-				"replace": 0,
-				"vividU": 0.15,
-				"vividV": 0.1,
-				"sizeOrigin": false,
-				"sharpen": true,
-				"invertLight": true,
-				"yuv420": true,
-				"yuv420Noise": 1,
-				"snow": false,
-				"quality": 0.35,
-				"damage": 0,
-				"ratio": 1.8,
-				"name": "颠倒黑白",
-				darkNoise: 250,
-				fit:'contain',
-			},
-			{
-				"zoom": 2.54,
-				"light": 1.52,
-				"contrast": 2.32,
-				"darkFade": 0,
-				"brightFade": 0,
-				"shiftX": 4,
-				"shiftY": 611,
-				"shiftU": 0,
-				"shiftV": 0,
-				"level": 1,
-				"interlaced": 1,
-				"interlacedStrong": 1,
-				"replace": 0,
-				"vividU": 0.15,
-				"vividV": 2,
-				"sizeOrigin": false,
-				"sharpen": true,
-				"invertLight": true,
-				"yuv420": true,
-				"yuv420Noise": 1,
-				"snow": false,
-				"quality": 0.35,
-				"damage": 0,
-				"ratio": 2,
-				"lightNoise": 123,
-				"darkNoise": 500,
-				"fit": "fill",
-				"name": "两极色温"
-			},
-			{
-				"zoom": 1.2,
-				"light": 1.1,
-				"contrast": 1.17,
-				"darkFade": 38,
-				"brightFade": 12,
-				"shiftX": 4,
-				"shiftY": 0,
-				"shiftU": 0,
-				"shiftV": 1,
-				"level": 1,
-				"interlaced": 1,
-				"interlacedStrong": 1,
-				"replace": 0,
-				"vividU": 0.73,
-				"vividV": 0.67,
-				"sizeOrigin": false,
-				"sharpen": true,
-				"invertLight": false,
-				"yuv420": true,
-				"yuv420Noise": 1,
-				"snow": false,
-				"quality": 0.9,
-				"damage": 0,
-				"ratio": 1,
-				"lightNoise": 9,
-				"darkNoise": 16,
-				"fit": "contain",
-				border:8,
-				"name": "影片光碟"
-			},
-			{
-				"zoom": 1.83,
-				"light": 1,
-				"contrast": 1,
-				"darkFade": 54,
-				"brightFade": 32,
-				"shiftX": 0,
-				"shiftY": 0,
-				"shiftU": 80,
-				"shiftV": 80,
-				"interlaced": 1,
-				"interlacedStrong": 1,
-				"replace": 0,
-				"vividU": 0.61,
-				"vividV": 0.59,
-				"sizeOrigin": false,
-				"sharpen": false,
-				"invertLight": false,
-				"yuv420": true,
-				"yuv420Noise": 8,
-				"snow": false,
-				"quality": 0.8,
-				"damage": 0,
-				"ratio":0.9,
-				"lightNoise": 0,
-				"darkNoise": 0,
-				"fit": "cover",
-				"border": 3,
-				"name": "情迷东京"
-			},
-			{
-				"zoom": 1.1,
-				"light": 1.09,
-				"contrast": 0.5,
-				"darkFade": 100,
-				"brightFade": 11,
-				"shiftX": 0,
-				"shiftY": 4,
-				"shiftU": -100,
-				"shiftV": 100,
-				"level": 55,
-				"interlaced": 1,
-				"interlacedStrong": 1,
-				"replace": 0,
-				"vividU": 0.1,
-				"vividV": 0.1,
-				"sizeOrigin": false,
-				"sharpen": true,
-				"invertLight": false,
-				"yuv420": true,
-				"yuv420Noise": 8,
-				"snow": false,
-				"quality": 0.35,
-				"damage": 0,
-				"ratio": 1,
-				"lightNoise": 0,
-				"darkNoise": 42,
-				"fit": "fill",
-				"border": 2.5,
-				"name": "鲜橙空气"
-			},
-			{
-				"zoom": 1.58,
-				"light": 4,
-				"contrast": 1,
-				"darkFade": 0,
-				"brightFade": 0,
-				"shiftX": 1,
-				"shiftY": 6,
-				"shiftU": -15,
-				"shiftV": 40,
-				"level": 84,
-				"interlaced": 0,
-				"interlacedStrong": 1,
-				"replace": 0,
-				"vividU": 1.2,
-				"vividV": 1,
-				"sizeOrigin": false,
-				"sharpen": false,
-				"invertLight": false,
-				"yuv420": true,
-				"yuv420Noise": 8,
-				"snow": false,
-				"quality": 0.6,
-				"damage": 0,
-				"ratio": 1,
-				"lightNoise": 0,
-				"darkNoise": 179,
-				"fit": "cover",
-				"border": 0,
-				"name": "核爆夕阳"
-			},
-			{
-				"name": "夜行生物",
-				"zoom": 1,
-				"light": 1,
-				"contrast": 1.02,
-				"darkFade": 0,
-				"brightFade": 39,
-				"shiftX": 7,
-				"shiftY": 10,
-				"shiftU": 0,
-				"shiftV": 1,
-				"level": 4,
-				"interlaced": 0,
-				"interlacedStrong": 1,
-				"replace": 0,
-				"vividU": 1.13,
-				"vividV": 0.97,
-				"sizeOrigin": false,
-				"sharpen": false,
-				"invertLight": true,
-				"yuv420": true,
-				"yuv420Noise": 1,
-				"snow": false,
-				"quality": 0.85,
-				"damage": 0,
-				"ratio": 1,
-				"lightNoise": 0,
-				"darkNoise": 0,
-				"fit": "cover",
-				"border": 10,
-			}
-		];
-
-	const config = {
-		...defaultConfig,
-		...configs[0]
-	};
 
 
 	const userConfigs = JSON.parse(localStorage.getItem('userConfigs')||'[]');
 
-
 	const data = {
 		src:'',
 		img:null,
-		config,
 		showConfig:true,
+		config:{
+			...defaultConfig,
+			...configs[0]
+		},
 		configs,
 		userConfigs,
-		images:[
-			"//magiconch.syouzyo.org/90s/captures/eva01-04.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva01-01.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva01-03.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva01-05.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva01-06.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva28-02.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva-01-00.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva-01-06.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva-01-07.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva-01-08.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva-01-09.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva-01-10.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eva-01-11.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1300101534.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1300105873.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1300106089.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1300155244.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1300155353.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1300866289.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1301268659.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1301898127.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1302755125.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1320935025.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1321782056.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1327427363.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1327427373.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1327427556.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1327503810.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1329190436.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1329190448.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1342130509.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1342130562.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1346337022.jpg",
-			"//magiconch.syouzyo.org/90s/captures/1346337029.jpg",
-			"//magiconch.syouzyo.org/90s/captures/a-certain-magical-index-2-episode-18-biribiri-shimapan-anime-image-gallery-020.jpg",
-			"//magiconch.syouzyo.org/90s/captures/clannad-b.jpg",
-			"//magiconch.syouzyo.org/90s/captures/clannad-disc5-cover.jpg",
-			"//magiconch.syouzyo.org/90s/captures/clannad-op-b.jpg",
-			"//magiconch.syouzyo.org/90s/captures/clannad-op.jpg",
-			"//magiconch.syouzyo.org/90s/captures/dayafter-01.jpg",
-			"//magiconch.syouzyo.org/90s/captures/dayafter-02.jpg",
-			"//magiconch.syouzyo.org/90s/captures/disa-01.jpg",
-			"//magiconch.syouzyo.org/90s/captures/disa-02.jpg",
-			"//magiconch.syouzyo.org/90s/captures/disa-03.jpg",
-			"//magiconch.syouzyo.org/90s/captures/disa-04.jpg",
-			"//magiconch.syouzyo.org/90s/captures/disa-05.jpg",
-			"//magiconch.syouzyo.org/90s/captures/disa-06.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eden-01.jpg",
-			"//magiconch.syouzyo.org/90s/captures/eureka-01.jpg",
-			"//magiconch.syouzyo.org/90s/captures/gcjjw.jpg",
-			"//magiconch.syouzyo.org/90s/captures/haruhi-01.jpg",
-			"//magiconch.syouzyo.org/90s/captures/haruhi-02.jpg",
-			"//magiconch.syouzyo.org/90s/captures/haruhi-03.jpg",
-			"//magiconch.syouzyo.org/90s/captures/haruhi-04.jpg",
-			"//magiconch.syouzyo.org/90s/captures/haruhi-07.jpg",
-			"//magiconch.syouzyo.org/90s/captures/haruhi-08.jpg",
-			"//magiconch.syouzyo.org/90s/captures/IMG_9725.JPG",
-			"//magiconch.syouzyo.org/90s/captures/kon-01.jpg",
-			"//magiconch.syouzyo.org/90s/captures/lain.jpg",
-			"//magiconch.syouzyo.org/90s/captures/nausic-01.jpg",
-			"//magiconch.syouzyo.org/90s/captures/orei-01.jpg",
-			"//magiconch.syouzyo.org/90s/captures/toari-01.jpg"
-		]
+		images
 	};
 
 	const isKanjiRegex = /^[\u0800-\u9fa5]+$/;
@@ -952,9 +515,6 @@
 				this.img = e.target;
 
 				this.draw();
-			},
-			isActiveImg(el,src){
-				// console.log(el,src);
 			},
 			output(){
 				const a = document.createElement('a');
