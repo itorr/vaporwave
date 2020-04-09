@@ -325,7 +325,7 @@ const app = new Vue({
 			});
 		},
 		vaporwave(){
-			vaporwave(this.img,this.style, src=>{
+			vaporwave(this.img,this.style,src=>{
 				app.src = src;
 			});
 		},
@@ -333,6 +333,9 @@ const app = new Vue({
 			this.img = e.target;
 
 			this.vaporwave();
+		},
+		voteStyle(){
+
 		},
 		output(){
 			const a = document.createElement('a');
