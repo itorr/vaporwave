@@ -1,4 +1,4 @@
-# 📹「蒸 気 机」虚拟信号风格化影像后期工具
+# 📹「蒸 気 機」虚拟信号风格化影像后期工具
 
 通过抽象虚拟信号影像展现过程中的各种可能性、实现了九十年代影像风格的重现。
 
@@ -22,6 +22,9 @@
 [https://github.com/itorr/vaporwave](https://github.com/itorr/vaporwave)
 
 ## 参考资料
+
 https://www.html5rocks.com/en/tutorials/canvas/imagefilters/
+
 https://en.wikipedia.org/wiki/YUV
+
 https://en.wikipedia.org/wiki/Convolution

@@ -1,6 +1,6 @@
 const configs = [
 	{
-		"name": "愈渐升温",
+		"name": "愈漸升溫",
 		"zoom": 1,
 		"shiftX": 6,
 		"shiftY": 4,
@@ -13,7 +13,7 @@ const configs = [
 		interlaced: 1,
 	},
 	{
-		"name": "灼热苦夏",
+		"name": "灼熱苦夏",
 		"zoom": 1,
 		"shiftX": 4,
 		"shiftY": 4,
@@ -25,7 +25,7 @@ const configs = [
 		"light": 0.9,
 	},
 	{
-		"name": "褪色老胶",
+		"name": "褪色老膠",
 		"zoom": 1.05,
 		"shiftX": 4,
 		"shiftY": 4,
@@ -39,7 +39,7 @@ const configs = [
 		darkNoise: 40,
 	},
 	{
-		"name": "隔行扫描",
+		"name": "隔行掃描",
 		"zoom": 2.4,
 		"light": 1,
 		"contrast": 1,
@@ -65,7 +65,7 @@ const configs = [
 		border:3,
 	},
 	{
-		"name": "数字信号",
+		"name": "數字信號",
 		"zoom": 1,
 		"shiftX": 4,
 		"shiftY": 0,
@@ -82,7 +82,7 @@ const configs = [
 	// 	none:true
 	// },
 	{
-		"name": "同步失败",
+		"name": "同步失敗",
 		"zoom": 3.15,
 		"shiftX": 20,
 		"shiftY": 14,
@@ -97,7 +97,7 @@ const configs = [
 		border:4,
 	},
 	{
-		"name": "信号沉默",
+		"name": "信號沈默",
 		"zoom": 2,
 		"light": 1,
 		"shiftX": 4,
@@ -130,10 +130,10 @@ const configs = [
 		"snow": false,
 		"quality": 0.4,
 		"damage": 0,
-		"name": "霓虹泛滥"
+		"name": "霓虹泛濫"
 	},
 	{
-		"name": "一九零零",
+		"name": "壹九零零",
 		"zoom": 1.1,
 		"light": 2.2,
 		"contrast": 0.5,
@@ -156,7 +156,7 @@ const configs = [
 		border:1,
 	},
 	{
-		"name": "颜色极端",
+		"name": "顏色極端",
 		"zoom": 1,
 		"light": 1.06,
 		"contrast": 0,
@@ -202,7 +202,7 @@ const configs = [
 		"quality": 0.35,
 		"damage": 0,
 		"ratio": 1.8,
-		"name": "颠倒黑白",
+		"name": "顛倒黑白",
 		darkNoise: 250,
 		fit:'contain',
 	},
@@ -234,7 +234,7 @@ const configs = [
 		"lightNoise": 123,
 		"darkNoise": 500,
 		"fit": "fill",
-		"name": "两极色温"
+		"name": "兩極色溫"
 	},
 	{
 		"zoom": 1.2,
@@ -295,7 +295,7 @@ const configs = [
 		"darkNoise": 0,
 		"fit": "cover",
 		"border": 3,
-		"name": "情迷东京"
+		"name": "情迷東京"
 	},
 	{
 		"zoom": 1.1,
@@ -326,7 +326,7 @@ const configs = [
 		"darkNoise": 42,
 		"fit": "fill",
 		"border": 2.5,
-		"name": "鲜橙空气"
+		"name": "鮮橙空氣"
 	},
 	{
 		"zoom": 1.58,
@@ -357,7 +357,7 @@ const configs = [
 		"darkNoise": 179,
 		"fit": "cover",
 		"border": 0,
-		"name": "核爆夕阳"
+		"name": "核爆夕陽"
 	},
 	{
 		"name": "夜行生物",
@@ -420,6 +420,6 @@ const configs = [
 		"fit": "cover",
 		"border": 1.4,
 		"none": false,
-		"name": "蓝调空气"
+		"name": "藍調空氣"
 	}
 ];

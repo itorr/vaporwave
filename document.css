@@ -2,6 +2,9 @@ html{
 	background: #ffd9ec;
 	color: #00a835;
 	font:400 14px/1.4 sans-serif;
+	text-rendering:optimizeLegibility;
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
 }
 body{
 	margin:0;
@@ -11,6 +14,10 @@ button,input{
 }
 a{
 	color:#ff32bb;
+}
+::selection{
+	background: #1e67ff;
+	color: #ffc9d5;
 }
 
 .pink{
@@ -53,6 +60,7 @@ a{
 	padding:0 44px 0 20px;
 	position: relative;
 	letter-spacing:.5em;
+	color:#00a835;
 }
 .config-list-box a .cor{
 	position: absolute;
@@ -101,8 +109,8 @@ a{
 }
 
 h1{
-	margin:0;
-	padding:20px 0 20px 10px;
+	margin:0 -10px 0 0;
+	padding:30px 0 20px 15px;
 
 	font-weight: 800;
 	font-size:3em;
@@ -135,6 +143,7 @@ h1{
 	font-size:18px;
 	line-height: 40px;
 	padding:0 14px;
+	letter-spacing:.5em;
 }
 .config .group .body{
 	padding:10px;
@@ -148,6 +157,7 @@ h1{
 }
 .config .label-box .head b{
 	float: left;
+	letter-spacing:.5em;
 }
 .config .label-box .head span{
 	float: right;
@@ -247,7 +257,7 @@ input[type="file"]{
 		padding-bottom:200px;
 	}
 	h1{
-		width: 4.5em;
+		/*width: 4.5em;*/
 	}
 
 
@@ -257,7 +267,8 @@ input[type="file"]{
 		left:0;
 		bottom:0;
 		width: 210px;
-		overflow: auto;
+		overflow: hidden;
+		overflow-y: auto;
 	}
 
 	.config-list-box{
@@ -295,7 +306,9 @@ input[type="file"]{
 		left:0;
 
 		padding:20px 0 120px;
-		overflow: auto;
+
+		overflow: hidden;
+		overflow-y: auto;
 	}
 
 	.btn-box{
@@ -382,6 +395,13 @@ input[type="file"]{
 	.config-list-box a{
 		width: 33.33%;
 		box-sizing:border-box;
+		padding:0 10px 0 0;
+		text-align: center;
+		letter-spacing:.3em;
+
+	}
+	.config-list-box a .cor{
+		width: 30px;
 	}
 }
 
@@ -389,10 +409,5 @@ input[type="file"]{
 	.config-list-box a{
 		font-size:14px;
 		line-height: 30px;
-		padding:0 30px 0 12px;
-
-	}
-	.config-list-box a .cor{
-		width: 30px;
 	}
 }
