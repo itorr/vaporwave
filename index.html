@@ -35,6 +35,13 @@
 		<div class="output">
 			<img :src="src" v-if="src">
 		</div>
+		<div class="img-list">
+			<img v-for="src,index in images"
+			     crossOrigin="Anonymous"
+			     :src="src"
+			     @click="setImageAndDraw"
+			     @load="index===0&&setImageAndDraw($event)">
+		</div>
 		<div class="side-right-box">
 			<div class="config" v-if="showConfig">
 				<div class="group">
@@ -326,13 +333,6 @@
 				<button @click="output()" class="btn big">导出图像</button>
 			</div>
 
-		</div>
-		<div class="img-list">
-			<img v-for="src,index in images"
-			     crossOrigin="Anonymous"
-			     :src="src"
-			     @click="setImageAndDraw"
-			     @load="index===0&&setImageAndDraw($event)">
 		</div>
 	</div>
 
