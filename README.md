@@ -3,7 +3,7 @@
 通过抽象虚拟信号影像展现过程中的各种可能性、实现了九十年代影像风格的重现。
 
 ## 项目地址
-[https://lab.magiconch.com/90s-time-machine/](https://lab.magiconch.com/90s-time-machine/?from=github)
+[https://lab.magiconch.com/vaporwave/](https://lab.magiconch.com/vaporwave/?from=github)
 
 ## 为什么做
 这是一个寻找影像风格化手段的过程中整理出的产物，没找到理想的工具所以自己整了个轮子。
@@ -19,7 +19,7 @@
 欢迎把没有版权纠纷的影像作品授权我放在页面下缘
 
 ## 仓库
-[https://github.com/itorr/90s-time-machine](https://github.com/itorr/90s-time-machine)
+[https://github.com/itorr/vaporwave](https://github.com/itorr/vaporwave)
 
 ## 参考资料
 https://www.html5rocks.com/en/tutorials/canvas/imagefilters/
