@@ -49,7 +49,7 @@ let scale  = width / height;
 
 
 let lastConfigString = null;
-const reDraw = (img,config,callback)=>{
+const vaporwave = (img, config, callback)=>{
 	if(!img || !config) return;
 
 	const configString = JSON.stringify(config)+img.src;
@@ -153,7 +153,33 @@ const reDraw = (img,config,callback)=>{
 		setWidth,setHeight
 	);
 
+
 	if(config.none) return imageOutput(canvas,config,callback);
+
+
+	if(config.watermark){
+
+		const watermarkSetWidth  = width * config.watermarkSize;
+		const watermarkSetHeight = watermarkSetWidth * logoImageEl.naturalHeight / logoImageEl.naturalWidth;
+
+		const watermarkSetLeft = (width - watermarkSetWidth)/2;
+		const watermarkSetTop  = height * 0.75 - watermarkSetHeight/2;
+
+		ctx.drawImage(
+			logoImageEl,
+			watermarkSetLeft,watermarkSetTop,
+			watermarkSetWidth,watermarkSetHeight
+		);
+	}
+
+	if(config.styleName){
+
+		ctx.font = `bold ${width/15 * config.watermarkSize}px/1 bold sans-serif`;
+		ctx.fillStyle = '#FFF';
+		ctx.textAlign = 'left';
+		ctx.textBaseline = 'middle';
+		ctx.fillText(config.name, width/20, height/6);
+	}
 
 	if(config.sharpen)
 		sharpen();
@@ -334,6 +360,7 @@ const reDraw = (img,config,callback)=>{
 	ctx.putImageData(pixel,0,0);
 
 
+
 	imageOutput(canvas,config,callback);
 
 
@@ -375,31 +402,31 @@ const getPixels = function() {
 };
 
 const convolute = function(pixels, weights) {
-	var side = Math.round(Math.sqrt(weights.length));
-	var halfSide = Math.floor(side/2);
+	const side = Math.round(Math.sqrt(weights.length));
+	const halfSide = Math.floor(side/2);
 
-	var src = pixels.data;
-	var sw = pixels.width;
-	var sh = pixels.height;
+	const src = pixels.data;
+	const sw = pixels.width;
+	const sh = pixels.height;
 
-	var w = sw;
-	var h = sh;
-	var output = ctx.createImageData(w, h);
-	var dst = output.data;
+	const w = sw;
+	const h = sh;
+	const output = ctx.createImageData(w, h);
+	const dst = output.data;
 
 
-	for (var y=0; y<h; y++) {
-		for (var x=0; x<w; x++) {
-			var sy = y;
-			var sx = x;
-			var dstOff = (y*w+x)*4;
-			var r=0, g=0, b=0;
-			for (var cy=0; cy<side; cy++) {
-				for (var cx=0; cx<side; cx++) {
-					var scy = Math.min(sh-1, Math.max(0, sy + cy - halfSide));
-					var scx = Math.min(sw-1, Math.max(0, sx + cx - halfSide));
-					var srcOff = (scy*sw+scx)*4;
-					var wt = weights[cy*side+cx];
+	for (let y=0; y<h; y++) {
+		for (let x=0; x<w; x++) {
+			const sy = y;
+			const sx = x;
+			const dstOff = (y*w+x)*4;
+			let r=0, g=0, b=0;
+			for (let cy=0; cy<side; cy++) {
+				for (let cx=0; cx<side; cx++) {
+					const scy = Math.min(sh-1, Math.max(0, sy + cy - halfSide));
+					const scx = Math.min(sw-1, Math.max(0, sx + cx - halfSide));
+					const srcOff = (scy*sw+scx)*4;
+					const wt = weights[cy*side+cx];
 					r += src[srcOff]   * wt;
 					g += src[srcOff+1] * wt;
 					b += src[srcOff+2] * wt;
@@ -425,3 +452,8 @@ const sharpen = function() {
 		]
 	), 0, 0);
 };
+
+
+const logoImageEl = new Image();
+logoImageEl.crossorigin = 'Anonymous';
+logoImageEl.src = 'logo.png';

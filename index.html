@@ -3,6 +3,7 @@
 <title>蒸 気 機 - 蒸汽波 - 虚拟信号风格化影像后期工具</title>
 <link rel="stylesheet" href="document.css">
 <meta name="viewport" content="width=device-width,user-scalable=0">
+<link rel="manifest" href="manifest.json" crossorigin="use-credentials">
 <div class="app">
 	<div class="ctrl-box">
 
@@ -16,7 +17,7 @@
 					<a v-for="_config in configs"
 					   :class="{active:_config.name === config.name}"
 					   @click="setConfig(_config)">
-						<span v-text="_config.name"></span>
+						<span class="name" v-text="_config.name"></span>
 						<span class="cor vote" @click.stop.prevent="voteConfig(_config)"></span>
 					</a>
 				</div>
@@ -25,7 +26,7 @@
 					<a v-for="_config in userConfigs"
 					   :class="{active:_config.name === config.name}"
 					   @click="setConfig(_config)">
-						<span v-text="_config.name"></span>
+						<span class="name" v-text="_config.name"></span>
 						<span class="cor remove" @click.stop.prevent="removeUserConfig(_config)"></span>
 					</a>
 				</div>
@@ -53,8 +54,8 @@
 			<div class="config" v-if="showConfig">
 				<div class="group">
 					<div class="body content">
-						<h2>📹「蒸 気 機」</h2>
-						<p>虚拟信号风格化影像后期工具。</p>
+						<h2>📹「 蒸 気 機 」</h2>
+						<p>虚拟信号蒸汽波风格化影像后期工具。</p>
 						<p>通过抽象虚拟信号影像展现过程中的各种可能性、实现了九十年代影像风格的重现。</p>
 						<p>
 							全做：<a href="https://weibo.com/reiove" target="_blank">@卜卜口</a>
@@ -73,7 +74,10 @@
 						</p>
 
 						<p>大家在摸索到理想的画面风格时，可以通过 <b class="line">提交成为公共预设</b> 功能分享预设给大家。</p>
-						<p>预设名称限制为 <b title="/^[\u0800-\u9fa5]+$/">四字中日文</b> ，提交的预设经审核通过即可显示。</p>
+						<p>
+							<span class="line">预设名称限制为 <b title="/^[\u0800-\u9fa5]+$/">四字中日文</b> <del>不需要加空格</del>，</span>
+							<span class="line">提交的预设经审核通过即可显示。</span>
+						</p>
 						<p>
 							如需高质量影像，可勾选
 							<label><input type="checkbox" v-model="config.sizeOrigin">原始尺寸处理</label>
@@ -300,12 +304,34 @@
 					</div>
 				</div>
 
+
+				<div class="group">
+					<div class="head">
+						<h3>水印設置</h3>
+					</div>
+					<div class="body">
+						<div class="label-box" style="padding:0 0 10px 0;">
+							<label>
+								<input type="checkbox" v-model="config.watermark">显示蒸汽机水印
+							</label>
+							<label>
+								<input type="checkbox" v-model="config.styleName">显示预设名
+							</label>
+						</div>
+						<div class="label-box">
+							<div class="head">
+								<b>盖印比例</b>
+								<span v-text="config.watermarkSize"></span>
+							</div>
+							<input type="range" v-model.number="config.watermarkSize" min="0.3" max="1.5" step="0.01">
+						</div>
+					</div>
+				</div>
 				<div class="group">
 					<div class="head">
 						<h3>其他設置</h3>
 					</div>
 					<div class="body">
-
 
 						<div class="label-box" style="padding:4px 0;">
 							<label>
@@ -325,12 +351,21 @@
 							</label>
 						</div>
 						-->
+					</div>
+				</div>
+
+				<div class="group">
+					<!--<div class="head">-->
+						<!--<h3>水印設置</h3>-->
+					<!--</div>-->
+					<div class="body">
 						<div class="label-box config-ctrl-box">
 							<button @click="addConfig()" class="btn wire">创建个人预设</button>
 							<button class="btn wire">提交成为公共预设</button>
 						</div>
 					</div>
 				</div>
+
 			</div>
 
 
@@ -340,7 +375,7 @@
 </div>
 
 <script src="https://cdn.bootcss.com/vue/2.6.11/vue.min.js"></script>
-<script src="90s.js"></script>
+<script src="vaporwave.js"></script>
 <script src="configs.js"></script>
 <script src="images.js"></script>
 <script>
@@ -360,7 +395,7 @@
 			img.src = src;
 			img.onload = ()=>{
 				app.img = img;
-				reDraw(img,app.config,src=>{
+				vaporwave(img,app.config, src=>{
 					app.src = src;
 				});
 			}
@@ -404,11 +439,11 @@
 		}
 	});
 
-	const _reDraw = (img,config,callback)=>{
+	const _vaporwave = (img,config,callback)=>{
 
-		clearTimeout(reDraw.T);
-		reDraw.T = setTimeout(()=>{
-			reDraw(img,config,callback);
+		clearTimeout(vaporwave.T);
+		vaporwave.T = setTimeout(()=>{
+			vaporwave(img,config,callback);
 			app.saveData();
 		},100);
 	};
@@ -465,6 +500,11 @@
 
 		none:false,
 
+		watermark:false,
+		watermarkSize:0.7,
+
+		styleName:false,
+
 	};
 
 
@@ -495,7 +535,7 @@
 					...defaultConfig,
 					...config
 				});
-				this.draw();
+				this.vaporwave();
 			},
 			addConfig(){
 				const name = prompt('输入四字中日文滤镜名（务必是四个中日文字）');
@@ -522,20 +562,20 @@
 			saveData(){
 				localStorage.setItem('userConfigs',JSON.stringify(app.userConfigs));
 			},
-			_draw(){
-				_reDraw(this.img,this.config,src=>{
+			_vaporwave(){
+				_vaporwave(this.img,this.config,src=>{
 					app.src = src;
 				});
 			},
-			draw(){
-				reDraw(this.img,this.config,src=>{
+			vaporwave(){
+				vaporwave(this.img,this.config, src=>{
 					app.src = src;
 				});
 			},
 			setImageAndDraw(e){
 				this.img = e.target;
 
-				this.draw();
+				this.vaporwave();
 			},
 			output(){
 				const a = document.createElement('a');
@@ -553,7 +593,7 @@
 			config:{
 				deep:true,
 				handler(){
-					this._draw();
+					this._vaporwave();
 				}
 			}
 		}

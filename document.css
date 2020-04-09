@@ -1,7 +1,7 @@
 html{
 	background: #ffd9ec;
 	color: #00a835;
-	font:400 14px/1.4 sans-serif;
+	font:400 14px/1.4 BlinkMacSystemFont,"Hiragino Sans GB","Microsoft YaHei","微软雅黑",sans-serif;
 	text-rendering:optimizeLegibility;
 	-webkit-font-smoothing:antialiased;
 	-moz-osx-font-smoothing:grayscale;
@@ -10,7 +10,7 @@ body{
 	margin:0;
 }
 button,input{
-	font:initial;
+	font:inherit;
 }
 a{
 	color:#ff32bb;
@@ -59,8 +59,10 @@ a{
 	cursor: pointer;
 	padding:0 44px 0 20px;
 	position: relative;
-	letter-spacing:.5em;
 	color:#00a835;
+}
+.config-list-box a .name{
+	letter-spacing:.5em;
 }
 .config-list-box a .cor{
 	position: absolute;
@@ -358,7 +360,7 @@ input[type="file"]{
 
 @media (max-width:1160px){
 	h1{
-		font-size:2em;
+		font-size:2.4em;
 	}
 	.config-list-box{
 		overflow: hidden;
@@ -384,14 +386,14 @@ input[type="file"]{
 		padding:30px 0 10px 10px;
 	}
 	.img-list{
-		padding-top:0px;
+		padding-top:0;
 	}
 	.config .group .body{
 		padding:10px 20px;
 	}
 }
 
-@media (max-width:500px){
+@media (max-width:630px){
 	.config-list-box a{
 		width: 33.33%;
 		box-sizing:border-box;
@@ -401,7 +403,7 @@ input[type="file"]{
 
 	}
 	.config-list-box a .cor{
-		width: 30px;
+		width: 40px;
 	}
 }
 

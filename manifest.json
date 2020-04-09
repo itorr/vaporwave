@@ -1,0 +1,16 @@
+{
+	"name": "蒸 気 機",
+	"short_name": "蒸気機",
+	"description": "蒸汽波 - 虚拟信号风格化影像后期工具",
+	"display": "standalone",
+	"start_url": "/",
+	"theme_color": "#fff",
+	"background_color": "#fff",
+	"icons": [
+		{
+			"src": "https://6.syouzyo.org/static/img/avatar.jpg",
+			"sizes": "440x440",
+			"type": "image/webp"
+		}
+	]
+}
