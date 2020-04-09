@@ -9,8 +9,13 @@ body{
 button,input{
 	font:initial;
 }
+a{
+	color:#ff32bb;
+}
 
-
+.pink{
+	color:#ff32bb;
+}
 
 ::-webkit-scrollbar-track-piece{
 	background:#ffd9ec;
@@ -47,6 +52,7 @@ button,input{
 	cursor: pointer;
 	padding:0 44px 0 20px;
 	position: relative;
+	letter-spacing:.5em;
 }
 .config-list-box a .cor{
 	position: absolute;
@@ -89,6 +95,9 @@ button,input{
 }
 .content del{
 	opacity: .3;
+}
+.content b{
+	margin:0 2px;
 }
 
 h1{
