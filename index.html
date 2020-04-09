@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<title>蒸 気 機 - 蒸汽波 - 虛擬信號風格化影像後期工具</title>
+<title>蒸 気 機 - 蒸汽波 - 虚拟信号风格化影像后期工具</title>
 <link rel="stylesheet" href="document.css">
 <meta name="viewport" content="width=device-width,user-scalable=0">
 <div class="app">
 	<div class="ctrl-box">
 
 		<!--<label>-->
-		<!--<input type="checkbox" v-model="showConfig">選項-->
+			<!--<input type="checkbox" v-model="showConfig">选项-->
 		<!--</label>-->
 		<div class="side-left-box">
 			<h1>蒸 気 機</h1>
@@ -21,7 +21,7 @@
 					</a>
 				</div>
 				<div class="user-config-list" v-if="userConfigs.length">
-					<h4>個人預設</h4>
+					<h4>个人预设</h4>
 					<a v-for="_config in userConfigs"
 					   :class="{active:_config.name === config.name}"
 					   @click="setConfig(_config)">
@@ -45,48 +45,48 @@
 		<div class="side-right-box">
 			<div class="btn-box">
 				<label>
-					<a class="btn big wire">打開圖像</a>
+					<a class="btn big wire">打开图像</a>
 					<input type="file" @change="chooseFile">
 				</label>
-				<button @click="output()" class="btn big">導出圖像</button>
+				<button @click="output()" class="btn big">导出图像</button>
 			</div>
 			<div class="config" v-if="showConfig">
 				<div class="group">
 					<div class="body content">
 						<h2>📹「蒸 気 機」</h2>
-						<p>虛擬信號風格化影像後期工具。</p>
-						<p>通過抽象虛擬信號影像展現過程中的各種可能性、實現了九十年代影像風格的重現。</p>
+						<p>虚拟信号风格化影像后期工具。</p>
+						<p>通过抽象虚拟信号影像展现过程中的各种可能性、实现了九十年代影像风格的重现。</p>
 						<p>
 							全做：<a href="https://weibo.com/reiove" target="_blank">@卜卜口</a>
 							/
-							反饋：<a href="https://github.com/itorr/vaporwave" target="_blank">GitHub</a>
+							反馈：<a href="https://github.com/itorr/vaporwave" target="_blank">GitHub</a>
 						</p>
-						<p>這是壹個尋找影像風格化手段的過程中整理出的產物，沒找到理想的工具所以自己整了個輪子。</p>
-						<p>旨在通過 <b>參數化</b>、<b>可視化</b> 來提升影像風格化的摸索效率。</p>
+						<p>这是一个寻找影像风格化手段的过程中整理出的产物，没找到理想的工具所以自己整了个轮子。</p>
+						<p>旨在通过 <b>参数化</b>、<b>可视化</b> 来提升影像风格化的摸索效率。</p>
 						<p class="pink">
-							<span class="line">點擊<b>打開圖像</b>即可使用本工具，</span>
-							<span class="line">同時支持<b>拖拽</b>及<b>粘貼</b>圖片。</span>
+							<span class="line">点击<b>打开图像</b>即可使用本工具，</span>
+							<span class="line">同时支持<b>拖拽</b>及<b>粘贴</b>图片。</span>
 						</p>
 						<p class="pink">
-							在本工具內打開的圖像不會上傳到服務器。<br>
-							<del>根據 EXIF 旋轉圖像功能還沒寫。</del>
+							在本工具内打开的图像不会上传到服务器。<br>
+							<del>根据 EXIF 旋转图像功能还没写。</del>
 						</p>
 
-						<p>大家在摸索到理想的畫面風格時，可以通過 <b class="line">提交成為公共預設</b> 功能分享預設給大家。</p>
-						<p>預設名稱限制為 <b title="/^[\u0800-\u9fa5]+$/">四字中日文</b> ，提交的預設經審核通過即可顯示。</p>
+						<p>大家在摸索到理想的画面风格时，可以通过 <b class="line">提交成为公共预设</b> 功能分享预设给大家。</p>
+						<p>预设名称限制为 <b title="/^[\u0800-\u9fa5]+$/">四字中日文</b> ，提交的预设经审核通过即可显示。</p>
 						<p>
-							如需高質量影像，可勾選
-							<label><input type="checkbox" v-model="config.sizeOrigin">原始尺寸處理</label>
+							如需高质量影像，可勾选
+							<label><input type="checkbox" v-model="config.sizeOrigin">原始尺寸处理</label>
 						</p>
-						<p>有適合當樣圖的影像可以 <b>點這裏上傳</b> 授權我！</p>
+						<p>有适合当样图的影像可以 <b>点这里上传</b> 授权我！</p>
 						<p>
-							有適合抽象的概念可以和我說，不壹定能做 🤔<br>
-							有什麽建議都可以和我說，不壹定聽 😠
+							有适合抽象的概念可以和我说，不一定能做 🤔<br>
+							有什么建议都可以和我说，不一定听 😠
 						</p>
 						<p>
-							← 最左面是公共預設列表，現在是我的壹些預設<br>
-							↙ 網面下緣是樣圖列表，可以配合預設預覽風格<br>
-							↓ 往下滾動是選項設置列表，最下可保存和分享
+							← 最左面是公共预设列表，现在是我的一些预设<br>
+							↙ 网面下缘是样图列表，可以配合预设预览风格<br>
+							↓ 往下滚动是选项设置列表，最下可保存和分享
 						</p>
 					</div>
 				</div>
@@ -97,14 +97,14 @@
 					<div class="body">
 						<div class="label-box">
 							<div class="head">
-								<b>畫面亮度</b>
+								<b>画面亮度</b>
 								<span v-text="config.light"></span>
 							</div>
 							<input type="range" v-model.number="config.light"  min="0" max="4" step="0.01">
 						</div>
 						<div class="label-box">
 							<div class="head">
-								<b>畫面反差</b>
+								<b>画面反差</b>
 								<span v-text="config.contrast"></span>
 							</div>
 							<input type="range" v-model.number="config.contrast"  min="0" max="4" step="0.01">
@@ -132,14 +132,14 @@
 					<div class="body">
 						<div class="label-box">
 							<div class="head">
-								<b>紫鮮艷度</b>
+								<b>紫鲜艳度</b>
 								<span v-text="config.vividU"></span>
 							</div>
 							<input type="range" v-model.number="config.vividU" min=".1" max="2" step="0.01">
 						</div>
 						<div class="label-box">
 							<div class="head">
-								<b>青鮮艷度</b>
+								<b>青鲜艳度</b>
 								<span v-text="config.vividV"></span>
 							</div>
 							<input type="range" v-model.number="config.vividV" min=".1" max="2" step="0.01">
@@ -160,7 +160,7 @@
 						</div>
 						<div class="label-box">
 							<div class="head">
-								<b>色彩斷層</b>
+								<b>色彩断层</b>
 								<span v-text="config.level"></span>
 							</div>
 							<input type="range" v-model.number="config.level"  min="1" max="255" step="1">
@@ -175,14 +175,14 @@
 					<div class="body">
 						<div class="label-box">
 							<div class="head">
-								<b>橫向偏移</b>
+								<b>横向偏移</b>
 								<span v-text="config.shiftX"></span>
 							</div>
 							<input type="range" v-model.number="config.shiftX" min="0" max="1000" step="1">
 						</div>
 						<div class="label-box">
 							<div class="head">
-								<b>縱向偏移</b>
+								<b>纵向偏移</b>
 								<span v-text="config.shiftY"></span>
 							</div>
 							<input type="range" v-model.number="config.shiftY" min="0" max="1000" step="1">
@@ -191,7 +191,7 @@
 
 						<div class="label-box">
 							<div class="head">
-								<b>信息置換</b>
+								<b>信息置换</b>
 								<span v-text="config.replace"></span>
 							</div>
 							<input type="range" v-model.number="config.replace" min="0" max="3" step="1">
@@ -199,23 +199,23 @@
 						<!--
 						<div class="label-box">
 							<div class="head">
-								<b>信號偏移</b>
+								<b>信号偏移</b>
 								<span v-text="config.yuv420Noise"></span>
 							</div>
 							<input type="range" v-model.number="config.yuv420Noise" min="1" max="2" step="0.01">
 						</div>
 						-->
 						<!--<div class="label-box">-->
-						<!--<div class="head">-->
-						<!--<b>整倍偏移</b>-->
-						<!--<span v-text="config.yuv420Noise"></span>-->
-						<!--</div>-->
-						<!--<input type="range" v-model.number="config.yuv420Noise" min="1" max="8" step="1">-->
+							<!--<div class="head">-->
+								<!--<b>整倍偏移</b>-->
+								<!--<span v-text="config.yuv420Noise"></span>-->
+							<!--</div>-->
+							<!--<input type="range" v-model.number="config.yuv420Noise" min="1" max="8" step="1">-->
 						<!--</div>-->
 
 						<div class="label-box">
 							<div class="head">
-								<b>像素合並</b>
+								<b>像素合并</b>
 								<span v-text="config.zoom"></span>
 							</div>
 							<input type="range" v-model.number="config.zoom"   min="1" max="20" step="0.01">
@@ -223,7 +223,7 @@
 
 						<div class="label-box">
 							<div class="head">
-								<b>隔行掃描</b>
+								<b>隔行扫描</b>
 								<span v-text="config.interlaced"></span>
 							</div>
 							<input type="range" v-model.number="config.interlaced" min="0" max="8" step="1">
@@ -233,21 +233,21 @@
 
 						<div class="label-box">
 							<div class="head">
-								<b>信號質量</b>
+								<b>信号质量</b>
 								<span v-text="config.quality"></span>
 							</div>
 							<input type="range" v-model.number="config.quality" min="0" max="1" step="0.05">
 						</div>
 						<div class="label-box">
 							<div class="head">
-								<b>信號噪聲</b>
+								<b>信号噪声</b>
 								<span v-text="config.lightNoise"></span>
 							</div>
 							<input type="range" v-model.number="config.lightNoise" min="0" max="500" step="1">
 						</div>
 						<div class="label-box">
 							<div class="head">
-								<b>膠片顆粒</b>
+								<b>胶片颗粒</b>
 								<span v-text="config.darkNoise"></span>
 							</div>
 							<input type="range" v-model.number="config.darkNoise" min="0" max="500" step="1">
@@ -264,7 +264,7 @@
 							<b>原始尺寸</b>
 
 							<label>
-								<input type="checkbox" v-model="config.sizeOrigin">原始尺寸處理（性能差）
+								<input type="checkbox" v-model="config.sizeOrigin">原始尺寸处理（性能差）
 							</label>
 						</div>
 						<div class="label-box" style="padding:10px 0;">
@@ -282,7 +282,7 @@
 						<div class="label-box">
 							<div class="label-box">
 								<div class="head">
-									<b>比例變形</b>
+									<b>比例变形</b>
 									<span v-text="config.ratio"></span>
 								</div>
 								<input type="range" v-model.number="config.ratio"
@@ -292,7 +292,7 @@
 						</div>
 						<div class="label-box">
 							<div class="head">
-								<b>邊緣偏差</b>
+								<b>边缘偏差</b>
 								<span v-text="config.border"></span>
 							</div>
 							<input type="range" v-model.number="config.border" min="0" max="30" step="0.1">
@@ -309,25 +309,25 @@
 
 						<div class="label-box" style="padding:4px 0;">
 							<label>
-								<input type="checkbox" v-model="config.sharpen">強調線條
+								<input type="checkbox" v-model="config.sharpen">强调线条
 							</label>
 							<label>
-								<input type="checkbox" v-model="config.snow">切斷信號
+								<input type="checkbox" v-model="config.snow">切断信号
 							</label>
 							<label>
-								<input type="checkbox" v-model="config.invertLight">顛倒黑白
+								<input type="checkbox" v-model="config.invertLight">颠倒黑白
 							</label>
 						</div>
 						<!--
 						<div class="label-box" style="padding:4px 0;">
 							<label>
-								<input type="checkbox" v-model="config.none">對比原圖
+								<input type="checkbox" v-model="config.none">对比原图
 							</label>
 						</div>
 						-->
 						<div class="label-box config-ctrl-box">
-							<button @click="addConfig()" class="btn wire">創建個人預設</button>
-							<button class="btn wire">提交成為公共預設</button>
+							<button @click="addConfig()" class="btn wire">创建个人预设</button>
+							<button class="btn wire">提交成为公共预设</button>
 						</div>
 					</div>
 				</div>
@@ -432,9 +432,9 @@
 		shiftV: 0,
 
 
-		level: 4, //顏色斷層
+		level: 4, //颜色断层
 
-		interlaced: 0, //隔行掃描
+		interlaced: 0, //隔行扫描
 		interlacedStrong:1,
 
 		replace:0,
@@ -456,8 +456,8 @@
 		ratio:1,
 
 
-		lightNoise:0, //明度噪聲
-		darkNoise:0, //膠片噪聲
+		lightNoise:0, //明度噪声
+		darkNoise:0, //胶片噪声
 
 		fit:'cover',
 
@@ -498,12 +498,12 @@
 				this.draw();
 			},
 			addConfig(){
-				const name = prompt('輸入四字中日文濾鏡名（務必是四個中日文字）');
+				const name = prompt('输入四字中日文滤镜名（务必是四个中日文字）');
 				if(!name){
 					return;
 				}
 				if(!isKanjiRegex.test(name.trim())){
-					return alert('這不是四字中日文，請檢查後重新提交');
+					return alert('这不是四字中日文，请检查后重新提交');
 				}
 
 				const config = deepCopy(this.config);
@@ -514,7 +514,7 @@
 				this.saveData();
 			},
 			removeUserConfig(config){
-				if(confirm('確定刪除這條預設？刪除後不可恢復')){
+				if(confirm('确定删除这条预设？删除后不可恢复')){
 					this.userConfigs.splice(this.userConfigs.indexOf(config),1);
 				}
 				this.saveData();
