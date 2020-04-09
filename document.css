@@ -339,7 +339,7 @@ input[type="file"]{
 	}
 	.config-list-box{
 		overflow: hidden;
-		padding:2px 0 30px;
+		padding:2px 0 4px;
 	}
 	.config-list-box h4{
 		display: none;
@@ -360,7 +360,7 @@ input[type="file"]{
 		padding-left:10px;
 	}
 	.img-list{
-		padding-top:10px;
+		padding-top:0px;
 	}
 	.config .group .body{
 		padding:10px 20px;
