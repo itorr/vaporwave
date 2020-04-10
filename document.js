@@ -122,6 +122,9 @@ const defaultStyle = {
 	watermark:false,
 	watermarkSize:0.7,
 
+	watermarkLeft:0.5,
+	watermarkTop:0.75,
+
 	styleName:false,
 
 };

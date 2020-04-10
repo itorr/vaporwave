@@ -172,8 +172,8 @@ const vaporwave = (img, config, callback)=>{
 		const watermarkSetWidth  = width * config.watermarkSize;
 		const watermarkSetHeight = watermarkSetWidth * logoImageEl.naturalHeight / logoImageEl.naturalWidth;
 
-		const watermarkSetLeft = (width - watermarkSetWidth)/2;
-		const watermarkSetTop  = height * 0.75 - watermarkSetHeight/2;
+		const watermarkSetLeft = width  * config.watermarkLeft - watermarkSetWidth/2;
+		const watermarkSetTop  = height * config.watermarkTop  - watermarkSetHeight/2;
 
 		ctx.drawImage(
 			logoImageEl,
