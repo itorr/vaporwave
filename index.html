@@ -30,7 +30,7 @@
 						<span class="cor remove" @click.stop.prevent="removeUserStyle(_style)"></span>
 					</a>
 				</div>
-				<div class="user-style-list" v-if="userStyles.length">
+				<div class="user-style-list" v-if="globalStyles.length">
 					<h4>公共预设</h4>
 					<a v-for="_style in globalStyles"
 					   :class="{active:_style.name === style.name}"
