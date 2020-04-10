@@ -18,7 +18,7 @@
 					   :class="{active:_style.name === style.name}"
 					   @click="setStyle(_style)">
 						<span class="name" v-text="_style.name"></span>
-						<span class="cor vote" @click.stop.prevent="voteStyle(_style)"></span>
+						<span class="cor vote"></span>
 					</a>
 				</div>
 				<div class="user-style-list" v-if="userStyles.length">
@@ -36,7 +36,8 @@
 					   :class="{active:_style.name === style.name}"
 					   @click="setStyle(_style)">
 						<span class="name" v-text="_style.name"></span>
-						<span class="cor remove" @click.stop.prevent="removeUserStyle(_style)"></span>
+						<span class="cor vote"></span>
+						<!-- @click.stop.prevent="voteStyle(_style)" -->
 					</a>
 				</div>
 
