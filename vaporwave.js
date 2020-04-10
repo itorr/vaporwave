@@ -175,11 +175,14 @@ const vaporwave = (img, config, callback)=>{
 		const watermarkSetLeft = width  * config.watermarkLeft - watermarkSetWidth/2;
 		const watermarkSetTop  = height * config.watermarkTop  - watermarkSetHeight/2;
 
+		ctx.globalAlpha = config.watermarkAlpha;
 		ctx.drawImage(
 			logoImageEl,
 			watermarkSetLeft,watermarkSetTop,
 			watermarkSetWidth,watermarkSetHeight
 		);
+
+		ctx.globalAlpha = 1;
 	}
 
 	if(config.styleName){

@@ -125,6 +125,8 @@ const defaultStyle = {
 	watermarkLeft:0.5,
 	watermarkTop:0.75,
 
+	watermarkAlpha:1,
+
 	styleName:false,
 
 };
