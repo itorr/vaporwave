@@ -282,6 +282,13 @@ const uploadCapture = ()=>{
 };
 
 
+const setLogoFromFile = ()=>{
+	chooseFile(file=>{
+		readFileToURL(file,src=>setLogoByURL(src,app.vaporwave));
+	});
+};
+
+
 
 const app = new Vue({
 	el:'.app',
@@ -348,7 +355,7 @@ const app = new Vue({
 		},
 		postStyle,
 		uploadCapture,
-
+		setLogoFromFile
 	},
 	watch:{
 		style:{

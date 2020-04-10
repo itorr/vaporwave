@@ -58,7 +58,11 @@ let lastConfigString = null;
 const vaporwave = (img, config, callback)=>{
 	if(!img || !config) return;
 
-	const configString = JSON.stringify(config)+img.src;
+	const configString = [
+		JSON.stringify(config),
+		img.src,
+		logoImageEl.src
+	].join('-');
 
 	if(lastConfigString === configString) return;
 
@@ -463,3 +467,8 @@ const sharpen = function() {
 const logoImageEl = new Image();
 logoImageEl.crossorigin = 'Anonymous';
 logoImageEl.src = 'logo.png';
+
+const setLogoByURL = (src,callback)=>{
+	logoImageEl.onload = callback;
+	logoImageEl.src = src;
+};
