@@ -96,7 +96,7 @@ const defaultStyle = {
 
 	transposeX: 0,
 	transposePow: 4,
-	transposeNoise:0,
+	transposeNoise:0.04,
 
 	replace:0,
 
