@@ -194,11 +194,10 @@ const vaporwave = (img, config, callback)=>{
 		ctx.fillText(config.name, width/20, height/6);
 	}
 
-	if(config.sharpen)
-		sharpen();
-	// return;
 
 	let pixel = getPixels();
+
+
 
 	let pixelData = pixel.data;
 
@@ -232,6 +231,18 @@ const vaporwave = (img, config, callback)=>{
 		// }
 
 	}else{
+
+		if(config.sharpen){
+			pixel = convolute(
+				pixel,
+				[
+					0, -1,  0,
+					-1, 2,  2,
+					0, -1,  0
+				]
+			);
+			pixelData = pixel.data;
+		}
 
 		const UVshifting = (yuv)=>{
 
@@ -270,6 +281,7 @@ const vaporwave = (img, config, callback)=>{
 
 		}
 	}
+
 
 	if(config.yuv420){
 		const p = 4;
@@ -319,7 +331,7 @@ const vaporwave = (img, config, callback)=>{
 		// 	pixelData = lastShowPixel.data;
 		// }else{
 
-		const linex = 4 * width;
+		// const linex = 4 * width;
 
 		// for (let i = 0; i < pixelData.length; i += 4) {
 		//
@@ -433,7 +445,7 @@ const imageResizeOutput = (src,config,callback)=>{
 
 	const img = new Image();
 
-	img.onload = function(){
+	img.onload = ()=>{
 		ctx.drawImage(img,0,0,canvas.width,canvas.height);
 		callback(canvas.toDataURL('image/jpeg',config.quality));
 	};
@@ -442,11 +454,11 @@ const imageResizeOutput = (src,config,callback)=>{
 
 
 
-const getPixels = function() {
+const getPixels = ()=>{
 	return ctx.getImageData(0,0,width,height);
 };
 
-const convolute = function(pixels, weights) {
+const convolute = (pixels, weights)=>{
 	const side = Math.round(Math.sqrt(weights.length));
 	const halfSide = Math.floor(side/2);
 
@@ -472,30 +484,26 @@ const convolute = function(pixels, weights) {
 					const scx = Math.min(sw-1, Math.max(0, sx + cx - halfSide));
 					const srcOff = (scy*sw+scx)*4;
 					const wt = weights[cy*side+cx];
-					r += src[srcOff]   * wt;
+					r += src[srcOff  ] * wt;
 					g += src[srcOff+1] * wt;
 					b += src[srcOff+2] * wt;
 				}
 			}
-			dst[dstOff] = r;
+			dst[dstOff  ] = r;
 			dst[dstOff+1] = g;
 			dst[dstOff+2] = b;
 			dst[dstOff+3] = 255;
 		}
 	}
+
+
+	// for (let y=0; y<h; y++) {
+	// 	for (let x=0; x<w; x++) {
+	// 		const srcOff = (y*w+x)*4;
+	// 		src[srcOff] = dst[srcOff];
+	// 	}
+	// }
 	return output;
-};
-
-
-const sharpen = function() {
-	ctx.putImageData(convolute(
-		getPixels(),
-		[
-			0, -1,  0,
-			-1, 2,  2,
-			0, -1,  0
-		]
-	), 0, 0);
 };
 
 
