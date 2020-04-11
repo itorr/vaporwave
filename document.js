@@ -90,6 +90,12 @@ const defaultStyle = {
 
 	interlaced: 0, //隔行扫描
 	interlacedStrong:1,
+	interlacedLine:2,
+
+
+
+	transposeX: 0,
+	transposePow: 4,
 
 	replace:0,
 

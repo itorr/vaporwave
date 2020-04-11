@@ -319,12 +319,44 @@ const vaporwave = (img, config, callback)=>{
 		// 	pixelData = lastShowPixel.data;
 		// }else{
 
-		const linex = 2 * 4 * width;
+		const linex = 4 * width;
 
-		for (let i = 0; i < pixelData.length; i += 4) {
+		// for (let i = 0; i < pixelData.length; i += 4) {
+		//
+		// 	if (Math.floor(i / linex / config.interlacedLine) % 2 === 0) {
+		// 		pixelData[i - linex - config.interlaced * 4] = pixelData[i - linex];
+		// 	}
+		// }
 
-			if (Math.floor(i / 4 / width) % 2 === 0) {
-				pixelData[i - linex - config.interlaced*4] = pixelData[i - linex];
+		for (let hi = 0; hi < height; hi++) {
+
+			let wLeft = Math.ceil( config.interlaced * Math.abs(( (hi % config.interlacedLine) / config.interlacedLine) - 0.5) * 2 ) * 4;
+
+			// console.log(wLeft);
+
+			for (let wi = 0; wi < width; wi++) {
+				let i = (width * hi + wi) * 4;
+
+				pixelData[i - wLeft] = pixelData[i];
+				// pixelData[yi + 1] = pixelData[i + 1];
+				// pixelData[yi + 2] = pixelData[i + 2];
+			}
+		}
+	}
+
+	if(config.transposeX){
+		for (let hi = 0; hi < height; hi++) {
+
+			let wLeft = Math.floor(width  * config.transposeX * Math.pow((hi/height),config.transposePow)) * 4;
+
+			// console.log(wLeft);
+
+			for (let wi = 0; wi < width; wi++) {
+				let i = (width * hi + wi) * 4;
+
+				pixelData[i - wLeft] = pixelData[i];
+				// pixelData[yi + 1] = pixelData[i + 1];
+				// pixelData[yi + 2] = pixelData[i + 2];
 			}
 		}
 	}
