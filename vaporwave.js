@@ -359,7 +359,7 @@ const vaporwave = (img, config, callback)=>{
 	if(config.transposeX){
 		for (let hi = 0; hi < height; hi++) {
 
-			let wLeft = Math.floor(width  * config.transposeX * Math.pow((hi/height),config.transposePow) * (1 + config.transposeNoise * Math.random())) * 4;
+			let wLeft = Math.floor(width  * config.transposeX * Math.pow((hi/height),config.transposePow) * (1 + config.transposeNoise * (Math.random()-0.5))) * 4;
 
 			// console.log(wLeft);
 
