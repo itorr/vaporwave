@@ -187,7 +187,7 @@ const vaporwave = (img, config, callback)=>{
 
 	if(config.styleName){
 
-		ctx.font = `bold ${width/15 * config.watermarkSize}px/1 bold sans-serif`;
+		ctx.font = `bold ${width/15 * config.watermarkSize}px/1 sans-serif`;
 		ctx.fillStyle = '#FFF';
 		ctx.textAlign = 'left';
 		ctx.textBaseline = 'middle';
