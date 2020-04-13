@@ -232,6 +232,13 @@ const vaporwave = (img, config, callback)=>{
 
 	}else{
 
+
+
+		if(config.replace) {
+			for (let i = 0; i < pixelData.length; i ++) {
+				pixelData[i - config.replace] = pixelData[i]
+			}
+		}
 		if(config.sharpen){
 			pixel = convolute(
 				pixel,
@@ -373,11 +380,6 @@ const vaporwave = (img, config, callback)=>{
 		}
 	}
 
-	if(config.replace) {
-		for (let i = 0; i < pixelData.length; i ++) {
-			pixelData[i - config.replace] = pixelData[i]
-		}
-	}
 
 	if(config.invertLight){
 		for (let i = 0; i < pixelData.length; i +=4) {
