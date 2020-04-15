@@ -10,6 +10,7 @@ const styles = [
 		"vividV": 0.74,
 		"light": 0.89,
 		interlaced: 1,
+		interlacedLight: .2,
 	},
 	{
 		"name": "灼熱苦夏",
@@ -40,7 +41,7 @@ const styles = [
 	},
 	{
 		"name": "隔行掃描",
-		"zoom": 2.4,
+		"zoom": 2,
 		"light": 1,
 		"darkFade": 55,
 		"brightFade": 0,
@@ -50,7 +51,7 @@ const styles = [
 		"shiftV": 1,
 		"level": 12,
 		"interlaced": 2,
-		"interlacedStrong": 1,
+		interlacedLight: 0.4,
 		"vividU": 1,
 		"vividV": 1,
 		"quality": 0.6,

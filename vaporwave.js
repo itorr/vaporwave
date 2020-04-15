@@ -347,7 +347,7 @@ const vaporwave = (img, config, callback)=>{
 		// 	}
 		// }
 
-		const interlacedLight = Math.pow(config.interlacedLight,3);
+		const interlacedLight = Math.pow(config.interlacedLight,2);
 
 		for (let hi = 0; hi < height; hi++) {
 
