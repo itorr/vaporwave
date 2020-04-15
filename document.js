@@ -357,7 +357,7 @@ const app = new Vue({
 					this.img = e.target;
 					this.vaporwave();
 				};
-				img.src = img.src.replace(/!w300$/,'!h480')
+				img.src = img.src.replace(/!w300$/,'')//!h480
 			}else{
 				this.img = e.target;
 				this.vaporwave();
