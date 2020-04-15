@@ -331,7 +331,7 @@ const vaporwave = (img, config, callback)=>{
 	}
 
 
-	if(config.interlaced) {
+	if(config.interlaced || config.interlacedLight) {
 		// // console.log(lastShowPixel,lastShowPixel&&lastShowPixel.width,pixel.width);
 		// if(lastShowPixel && lastShowPixel.width === pixel.width){
 		// 	pixel     = lastShowPixel;
@@ -349,14 +349,16 @@ const vaporwave = (img, config, callback)=>{
 
 		for (let hi = 0; hi < height; hi++) {
 
-			let wLeft = Math.ceil( config.interlaced * Math.abs(( (hi % config.interlacedLine) / config.interlacedLine) - 0.5) * 2 ) * 4;
+			const interlacePeriod = (hi % config.interlacedLine) / config.interlacedLine;
+			const interlacePixel = Math.abs(interlacePeriod - 0.5) * 2;
+			let wLeft = Math.ceil( config.interlaced * interlacePixel ) * 4;
 
 			// console.log(wLeft);
 
 			for (let wi = 0; wi < width; wi++) {
 				let i = (width * hi + wi) * 4;
 
-				pixelData[i - wLeft] = pixelData[i];
+				pixelData[i - wLeft] = pixelData[i] * ( 1 + config.interlacedLight * interlacePixel);
 				// pixelData[yi + 1] = pixelData[i + 1];
 				// pixelData[yi + 2] = pixelData[i + 2];
 			}

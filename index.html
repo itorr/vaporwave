@@ -189,6 +189,7 @@
 						<h3>效果設置</h3>
 					</div>
 					<div class="body">
+
 						<div class="label-box">
 							<div class="head">
 								<b>横向偏移</b>
@@ -229,13 +230,7 @@
 							<!--<input type="range" v-model.number="style.yuv420Noise" min="1" max="8" step="1">-->
 						<!--</div>-->
 
-						<div class="label-box">
-							<div class="head">
-								<b>像素合并</b>
-								<span v-text="style.zoom"></span>
-							</div>
-							<input type="range" v-model.number="style.zoom"   min="1" max="20" step="0.01">
-						</div>
+						<h4>隔行扫描</h4>
 
 						<div class="label-box">
 							<div class="head">
@@ -254,7 +249,16 @@
 							       min="2" max="8" step="2">
 						</div>
 
+						<div class="label-box">
+							<div class="head">
+								<b>隔行扫描亮度</b>
+								<span v-text="style.interlacedLight"></span>
+							</div>
+							<input type="range" v-model.number="style.interlacedLight" min="-2" max="2" step="0.01">
+						</div>
 
+
+						<h4>漂移</h4>
 
 						<div class="label-box">
 							<div class="head">
@@ -268,17 +272,37 @@
 								<b>横向漂移抛物线</b>
 								<span v-text="style.transposePow"></span>
 							</div>
-							<input type="range" v-model.number="style.transposePow" min="1" max="8" step="0.1">
+							<input type="range" v-model.number="style.transposePow"
+							       :disabled="!style.transposeX"
+							       min="1" max="8" step="0.1">
 						</div>
 						<div class="label-box">
 							<div class="head">
 								<b>横向漂移杂讯</b>
 								<span v-text="style.transposeNoise"></span>
 							</div>
-							<input type="range" v-model.number="style.transposeNoise" min="0" max="2" step="0.01">
+							<input type="range" v-model.number="style.transposeNoise"
+							       :disabled="!style.transposeX"
+							       min="0" max="2" step="0.01">
 						</div>
 
 
+					</div>
+				</div>
+				<div class="group">
+					<div class="head">
+						<h3>质量設置</h3>
+					</div>
+					<div class="body">
+
+
+						<div class="label-box">
+							<div class="head">
+								<b>像素合并</b>
+								<span v-text="style.zoom"></span>
+							</div>
+							<input type="range" v-model.number="style.zoom"   min="1" max="20" step="0.01">
+						</div>
 
 						<div class="label-box">
 							<div class="head">

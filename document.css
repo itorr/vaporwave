@@ -154,6 +154,11 @@ h1{
 .style .group .body{
 	padding:10px;
 }
+.style .group .body h4{
+	border:0;
+	margin:20px 10px 15px;
+	font-size:14px;
+}
 .style .label-box{
 	padding:4px 0;
 }
@@ -379,7 +384,11 @@ input[type="file"]{
 		line-height: 40px;
 		padding:0 40px 0 10px;
 	}
-
+	.output{
+		position: sticky;
+		top: 0;
+		left: 0;
+	}
 	.output img{
 		display: block;
 		margin:0 auto;
