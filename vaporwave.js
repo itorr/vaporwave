@@ -347,18 +347,22 @@ const vaporwave = (img, config, callback)=>{
 		// 	}
 		// }
 
+		const interlacedLight = Math.pow(config.interlacedLight,3);
+
 		for (let hi = 0; hi < height; hi++) {
 
 			const interlacePeriod = (hi % config.interlacedLine) / config.interlacedLine;
-			const interlacePixel = (interlacePeriod - 0.5) * 2;
-			let wLeft = Math.ceil( config.interlaced * Math.abs(interlacePixel) ) * 4;
+			const interlacePixel = Math.abs(interlacePeriod - 0.5) * 2;
+			let wLeft = Math.ceil( config.interlaced * interlacePixel ) * 4;
+
+			const interlaceLightPeriod = (interlacePixel - 0.5) * 2;
 
 			// console.log(wLeft);
 
 			for (let wi = 0; wi < width; wi++) {
 				let i = (width * hi + wi) * 4;
 
-				pixelData[i - wLeft] = pixelData[i] * ( 1 + config.interlacedLight * interlacePixel);
+				pixelData[i - wLeft] = pixelData[i] * ( 1 + interlacedLight * interlaceLightPeriod);
 				// pixelData[yi + 1] = pixelData[i + 1];
 				// pixelData[yi + 2] = pixelData[i + 2];
 			}
