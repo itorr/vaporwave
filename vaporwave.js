@@ -350,8 +350,8 @@ const vaporwave = (img, config, callback)=>{
 		for (let hi = 0; hi < height; hi++) {
 
 			const interlacePeriod = (hi % config.interlacedLine) / config.interlacedLine;
-			const interlacePixel = Math.abs(interlacePeriod - 0.5) * 2;
-			let wLeft = Math.ceil( config.interlaced * interlacePixel ) * 4;
+			const interlacePixel = (interlacePeriod - 0.5) * 2;
+			let wLeft = Math.ceil( config.interlaced * Math.abs(interlacePixel) ) * 4;
 
 			// console.log(wLeft);
 
