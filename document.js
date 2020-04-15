@@ -350,9 +350,21 @@ const app = new Vue({
 			});
 		},
 		setImageAndDraw(e){
-			this.img = e.target;
+			let img = e.target;
 
-			this.vaporwave();
+			if(/!w300/.test(img.src)){
+				img.onload = ()=>{
+					this.img = e.target;
+					this.vaporwave();
+				};
+				img.src = img.src.replace(/!w300$/,'!h480')
+			}else{
+				this.img = e.target;
+				this.vaporwave();
+			}
+
+
+
 		},
 		voteStyle(){
 
