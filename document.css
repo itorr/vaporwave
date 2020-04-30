@@ -131,6 +131,18 @@ h1{
 	object-fit: contain;
 	background: #222;
 }
+.output img[data-wide="21:9"]{
+	height: 320px;
+	width: 748px;
+}
+.output img[data-wide="16:9"]{
+	height: 405px;
+	width: 720px;
+}
+.output img[data-wide="1:1"]{
+	height: 500px;
+	width: 500px;
+}
 .side-right-box {
 	font-size:12px;
 	text-align: left;

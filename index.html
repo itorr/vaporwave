@@ -44,7 +44,7 @@
 			</div>
 		</div>
 		<div class="output">
-			<img :src="src" v-if="src">
+			<img :src="src" v-if="src" :data-wide="style.wide">
 		</div>
 		<div class="img-list">
 			<img v-for="src,index in images"
@@ -340,6 +340,21 @@
 							</label>
 						</div>
 						<div class="label-box" style="padding:10px 0;">
+							<b>画幅比例</b>
+							<label>
+								<input type="radio" v-model="style.wide" value="4:3" :disabled="style.sizeOrigin">4:3
+							</label>
+							<label>
+								<input type="radio" v-model="style.wide" value="16:9" :disabled="style.sizeOrigin">16:9
+							</label>
+							<label>
+								<input type="radio" v-model="style.wide" value="21:9" :disabled="style.sizeOrigin">21:9
+							</label>
+							<label>
+								<input type="radio" v-model="style.wide" value="1:1" :disabled="style.sizeOrigin">1:1
+							</label>
+						</div>
+						<div class="label-box" style="padding:10px 0;">
 							<b>拉伸方案</b>
 							<label>
 								<input type="radio" v-model="style.fit" value="cover" :disabled="style.sizeOrigin">填充
@@ -379,23 +394,11 @@
 					</div>
 					<div class="body">
 						<div class="label-box" style="padding:0 0 10px 0;">
-							<button @click="setLogoFromFile"
-							        :disabled="!style.watermark">选择水印</button>
-							<label>
+							<label style="display:inline-block;margin-right:1em;">
 								<input type="checkbox" v-model="style.watermark">显示蒸汽机水印
 							</label>
-							<label>
-								<input type="checkbox" v-model="style.styleName">显示预设名
-							</label>
-						</div>
-						<div class="label-box">
-							<div class="head">
-								<b>盖印比例</b>
-								<span v-text="style.watermarkSize"></span>
-							</div>
-							<input type="range" v-model.number="style.watermarkSize"
-							       :disabled="!style.watermark"
-							       min="0.3" max="1.5" step="0.01">
+							<button @click="setLogoFromFile"
+							        :disabled="!style.watermark">选择水印</button>
 						</div>
 						<div class="label-box">
 							<div class="head">
@@ -424,6 +427,47 @@
 							       :disabled="!style.watermark"
 							       min="0" max="1" step="0.01">
 						</div>
+						<div class="label-box">
+							<div class="head">
+								<b>盖印比例</b>
+								<span v-text="style.watermarkSize"></span>
+							</div>
+							<input type="range" v-model.number="style.watermarkSize"
+							       :disabled="!style.watermark"
+							       min="0.3" max="1.5" step="0.01">
+						</div>
+						<div class="label-box" style="padding:10px 0;">
+							<label>
+								<input type="checkbox" v-model="style.styleName">显示预设名
+							</label>
+						</div>
+						<div class="label-box">
+							<div class="head">
+								<b>水平位置</b>
+								<span v-text="style.styleLeft"></span>
+							</div>
+							<input type="range" v-model.number="style.styleLeft"
+							       :disabled="!style.styleName"
+							       min="0" max="1" step="0.01">
+						</div>
+						<div class="label-box">
+							<div class="head">
+								<b>垂直位置</b>
+								<span v-text="style.styleTop"></span>
+							</div>
+							<input type="range" v-model.number="style.styleTop"
+							       :disabled="!style.styleName"
+							       min="0" max="1" step="0.01">
+						</div>
+						<div class="label-box">
+							<div class="head">
+								<b>盖印比例</b>
+								<span v-text="style.styleSize"></span>
+							</div>
+							<input type="range" v-model.number="style.styleSize"
+							       :disabled="!style.styleName"
+							       min="0.3" max="1.5" step="0.01">
+						</div>
 					</div>
 				</div>
 				<div class="group">
@@ -431,7 +475,6 @@
 						<h3>其他設置</h3>
 					</div>
 					<div class="body">
-
 						<div class="label-box" style="padding:4px 0;">
 							<label>
 								<input type="checkbox" v-model="style.sharpen">强调线条
@@ -442,6 +485,40 @@
 							<label>
 								<input type="checkbox" v-model="style.invertLight">颠倒黑白
 							</label>
+						</div>
+
+
+						<div class="label-box" style="padding:10px 0;">
+							<b>线条方案</b>
+							<label>
+								<input type="radio" v-model="style.convolute" :value="[
+											0, -1,  0,
+											-1, 2,  2,
+											0, -1,  0
+										]" :disabled="style.sizeOrigin">右倾
+							</label>
+							<label>
+								<input type="radio" v-model="style.convolute" :value="[
+											0, -1,  0,
+											3,  2, -2,
+											0, -1,  0
+										]" :disabled="style.sizeOrigin">左倾
+							</label>
+							<label>
+								<input type="radio" v-model="style.convolute" :value="[
+											1/9, 1/9, 1/9,
+										    1/9, 1/9, 1/9,
+										    1/9, 1/9, 1/9
+										]" :disabled="style.sizeOrigin">桑拿
+							</label>
+							<label>
+								<input type="radio" v-model="style.convolute" :value="[
+											1,1,1,
+											1,1,-1,
+											-1,-1,-1
+										]" :disabled="style.sizeOrigin">浮雕
+							</label>
+
 						</div>
 						<!--
 						<div class="label-box" style="padding:4px 0;">

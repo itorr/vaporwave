@@ -75,8 +75,24 @@ const vaporwave = (img, config, callback)=>{
 
 
 	if(!config.sizeOrigin){
-		width  = 640;
-		height = 480;
+		switch(config.wide){
+			case '16:9':
+				width  = 720;
+				height = 405;
+				break;
+			case '21:9':
+				width  = 748;
+				height = 320;
+				break;
+			case '1:1':
+				width  = 500;
+				height = 500;
+				break;
+			default:
+				width  = 640;
+				height = 480;
+				break;
+		}
 	}else{
 		width  = oriWidth;
 		height = oriHeight;
@@ -86,10 +102,12 @@ const vaporwave = (img, config, callback)=>{
 		}
 	}
 
+	scale = width / height;
+
+
 	width  = Math.floor( width  / config.zoom );
 	height = Math.floor( height / config.zoom );
 
-	scale = width / height;
 
 	canvas.width = width;
 	canvas.height = height;
@@ -187,11 +205,17 @@ const vaporwave = (img, config, callback)=>{
 
 	if(config.styleName){
 
-		ctx.font = `bold ${width/15 * config.watermarkSize}px/1 sans-serif`;
+		const styleFontSize = width/15 * config.styleSize;
+
+		ctx.font = `bold ${styleFontSize}px/1 sans-serif`;
 		ctx.fillStyle = '#FFF';
 		ctx.textAlign = 'left';
 		ctx.textBaseline = 'middle';
-		ctx.fillText(config.name, width/20, height/6);
+		ctx.fillText(
+			config.name,
+			width * config.styleLeft - styleFontSize * 2,
+			height * config.styleTop - styleFontSize/2
+		);
 	}
 
 
@@ -242,11 +266,7 @@ const vaporwave = (img, config, callback)=>{
 		if(config.sharpen){
 			pixel = convolute(
 				pixel,
-				[
-					0, -1,  0,
-					-1, 2,  2,
-					0, -1,  0
-				]
+				config.convolute
 			);
 			pixelData = pixel.data;
 		}
@@ -448,8 +468,8 @@ const imageResizeOutput = (src,config,callback)=>{
 	const ctx = canvas.getContext('2d');
 
 
-	canvas.width  = 640;
-	canvas.height = 480;
+	canvas.width  = width;
+	canvas.height = height;
 
 	const img = new Image();
 

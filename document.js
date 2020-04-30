@@ -135,7 +135,20 @@ const defaultStyle = {
 
 	watermarkAlpha:1,
 
+
 	styleName:false,
+	styleLeft:0.13,
+	styleTop:0.166,
+
+	styleSize:0.7,
+
+	wide:'4:3',
+
+	convolute:[
+		0, -1,  0,
+		-1, 2,  2,
+		0, -1,  0
+	]
 
 };
 
