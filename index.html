@@ -491,16 +491,16 @@
 						<div class="label-box" style="padding:10px 0;">
 							<b>线条方案</b>
 							<label>
-								<input type="radio" v-model="style.convolute" value="右倾" :disabled="style.sizeOrigin">右倾
+								<input type="radio" v-model="style.convoluteName" value="右倾" :disabled="!style.sharpen">右倾
 							</label>
 							<label>
-								<input type="radio" v-model="style.convolute" value="左倾" :disabled="style.sizeOrigin">左倾
+								<input type="radio" v-model="style.convoluteName" value="左倾" :disabled="!style.sharpen">左倾
 							</label>
 							<label>
-								<input type="radio" v-model="style.convolute" value="桑拿" :disabled="style.sizeOrigin">桑拿
+								<input type="radio" v-model="style.convoluteName" value="桑拿" :disabled="!style.sharpen">桑拿
 							</label>
 							<label>
-								<input type="radio" v-model="style.convolute" value="浮雕" :disabled="style.sizeOrigin">浮雕
+								<input type="radio" v-model="style.convoluteName" value="浮雕" :disabled="!style.sharpen">浮雕
 							</label>
 
 						</div>

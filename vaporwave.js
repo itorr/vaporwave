@@ -289,7 +289,7 @@ const vaporwave = (img, config, callback)=>{
 		if(config.sharpen){
 			pixel = convolute(
 				pixel,
-				Convolutes[config.convolute]||Convolutes['右倾']
+				Convolutes[config.convoluteName]||Convolutes['右倾']
 			);
 			pixelData = pixel.data;
 		}

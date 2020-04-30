@@ -144,11 +144,7 @@ const defaultStyle = {
 
 	wide:'4:3',
 
-	convolute:[
-		0, -1,  0,
-		-1, 2,  2,
-		0, -1,  0
-	]
+	convoluteName:'右倾'
 
 };
 
