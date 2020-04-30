@@ -135,25 +135,25 @@ const vaporwave = (img, config, callback)=>{
 	scale = width / height;
 
 
-	width  = Math.floor( width  / config.zoom );
-	height = Math.floor( height / config.zoom );
+	const _width  = Math.floor( width  / config.zoom );
+	const _height = Math.floor( height / config.zoom );
 
 
-	canvas.width = width;
-	canvas.height = height;
+	canvas.width  = _width;
+	canvas.height = _height;
 
 	let cutLeft = 0;
 	let cutTop  = 0;
 
-	let calcWidth = oriWidth;
+	let calcWidth  = oriWidth;
 	let calcHeight = oriHeight;
 
 
 	let setLeft = 0;
 	let setTop  = 0;
 
-	let setWidth = width;
-	let setHeight = height;
+	let setWidth  = _width;
+	let setHeight = _height;
 
 
 	if(config.fit === 'cover'){
@@ -174,13 +174,13 @@ const vaporwave = (img, config, callback)=>{
 		oriScale = oriScale / config.ratio;
 
 		if(oriScale > scale){ //原图更宽
-			setWidth  = width;
-			setHeight = width / oriScale;
-			setTop  = ( height - setHeight )/2;
+			setWidth  = _width;
+			setHeight = _width / oriScale;
+			setTop  = ( _height - setHeight )/2;
 		}else{
-			setWidth  = height * oriScale;
-			setHeight = height;
-			setLeft = ( width - setWidth )/2;
+			setWidth  = _height * oriScale;
+			setHeight = _height;
+			setLeft = ( _width - setWidth )/2;
 		}
 	}else{
 
@@ -219,11 +219,11 @@ const vaporwave = (img, config, callback)=>{
 
 	if(config.watermark){
 
-		const watermarkSetWidth  = width * config.watermarkSize;
+		const watermarkSetWidth  = _width * config.watermarkSize;
 		const watermarkSetHeight = watermarkSetWidth * logoImageEl.naturalHeight / logoImageEl.naturalWidth;
 
-		const watermarkSetLeft = width  * config.watermarkLeft - watermarkSetWidth/2;
-		const watermarkSetTop  = height * config.watermarkTop  - watermarkSetHeight/2;
+		const watermarkSetLeft = _width  * config.watermarkLeft - watermarkSetWidth/2;
+		const watermarkSetTop  = _height * config.watermarkTop  - watermarkSetHeight/2;
 
 		ctx.globalAlpha = config.watermarkAlpha;
 		ctx.drawImage(
@@ -237,7 +237,7 @@ const vaporwave = (img, config, callback)=>{
 
 	if(config.styleName){
 
-		const styleFontSize = width/15 * config.styleSize;
+		const styleFontSize = _width/15 * config.styleSize;
 
 		ctx.font = `bold ${styleFontSize}px/1 sans-serif`;
 		ctx.fillStyle = '#FFF';
@@ -245,20 +245,20 @@ const vaporwave = (img, config, callback)=>{
 		ctx.textBaseline = 'middle';
 		ctx.fillText(
 			config.name,
-			width * config.styleLeft - styleFontSize * 2,
-			height * config.styleTop - styleFontSize/2
+			_width * config.styleLeft - styleFontSize * 2,
+			_height * config.styleTop - styleFontSize/2
 		);
 	}
 
 
-	let pixel = getPixels();
+	let pixel = ctx.getImageData(0,0,_width,_height);
 
 
 
 	let pixelData = pixel.data;
 
 
-	let shiftUPixel = 4 * config.shiftX + 4 * width * config.shiftY;
+	let shiftUPixel = 4 * config.shiftX + 4 * _width * config.shiftY;
 	let shiftVPixel = 4 * (config.shiftX + config.shiftY);
 
 
@@ -272,7 +272,7 @@ const vaporwave = (img, config, callback)=>{
 			pixel = ctx.createImageData(pixel.width, pixel.height);
 			pixelData = pixel.data;
 
-			const linex = 2 * 4 * width;
+			const linex = 2 * 4 * _width;
 
 			for(let i = 0;i < pixelData.length;i += 4){
 				pixelData[i                 ] = randRange(0,25)*10;//Math.floor(i / (style.light+1)/1000 % 200) + randRange(0,55);
@@ -280,7 +280,7 @@ const vaporwave = (img, config, callback)=>{
 				pixelData[i+2 - shiftVPixel ] = randRange(118,138);
 				pixelData[i+3 - shiftVPixel ] = 255;
 
-				if(Math.floor(i/4/width)%2 === 0){
+				if(Math.floor(i/4/_width)%2 === 0){
 					pixelData[i - shiftUPixel - linex] = pixelData[i - shiftUPixel ] + 100;
 				}
 			}
@@ -345,14 +345,14 @@ const vaporwave = (img, config, callback)=>{
 	if(config.yuv420){
 		const p = 4;
 		const s = Math.sqrt(p);
-		let maxX = Math.floor(width/s);
-		let maxY = Math.floor(height/s);
-		const lineP = Math.floor(config.yuv420Noise * 4 * width); //一排像素数
+		let maxX = Math.floor(_width/s);
+		let maxY = Math.floor(_height/s);
+		const lineP = Math.floor(config.yuv420Noise * 4 * _width); //一排像素数
 		const pixelLength= pixelData.length;
 
 		for(let x=0;x < maxX;x++){
 			for(let y=0;y < maxY;y++){
-				const i = y * s * 4 * width + x * s * 4;
+				const i = y * s * 4 * _width + x * s * 4;
 
 				// for(let si=0;si<s;si++){
 				//
@@ -390,7 +390,7 @@ const vaporwave = (img, config, callback)=>{
 		// 	pixelData = lastShowPixel.data;
 		// }else{
 
-		// const linex = 4 * width;
+		// const linex = 4 * _width;
 
 		// for (let i = 0; i < pixelData.length; i += 4) {
 		//
@@ -401,7 +401,7 @@ const vaporwave = (img, config, callback)=>{
 
 		const interlacedLight = Math.pow(config.interlacedLight,2);
 
-		for (let hi = 0; hi < height; hi++) {
+		for (let hi = 0; hi < _height; hi++) {
 
 			const interlacePeriod = (hi % config.interlacedLine) / config.interlacedLine;
 			const interlacePixel = Math.abs(interlacePeriod - 0.5) * 2;
@@ -411,8 +411,8 @@ const vaporwave = (img, config, callback)=>{
 
 			// console.log(wLeft);
 
-			for (let wi = 0; wi < width; wi++) {
-				let i = (width * hi + wi) * 4;
+			for (let wi = 0; wi < _width; wi++) {
+				let i = (_width * hi + wi) * 4;
 
 				pixelData[i - wLeft] = pixelData[i] * ( 1 + interlacedLight * interlaceLightPeriod);
 				// pixelData[yi + 1] = pixelData[i + 1];
@@ -422,14 +422,14 @@ const vaporwave = (img, config, callback)=>{
 	}
 
 	if(config.transposeX){
-		for (let hi = 0; hi < height; hi++) {
+		for (let hi = 0; hi < _height; hi++) {
 
-			let wLeft = Math.floor(width  * config.transposeX * Math.pow((hi/height),config.transposePow) * (1 + config.transposeNoise * (Math.random()-0.5))) * 4;
+			let wLeft = Math.floor(_width  * config.transposeX * Math.pow((hi/_height),config.transposePow) * (1 + config.transposeNoise * (Math.random()-0.5))) * 4;
 
 			// console.log(wLeft);
 
-			for (let wi = 0; wi < width; wi++) {
-				let i = (width * hi + wi) * 4;
+			for (let wi = 0; wi < _width; wi++) {
+				let i = (_width * hi + wi) * 4;
 
 				pixelData[i - wLeft] = pixelData[i];
 				// pixelData[yi + 1] = pixelData[i + 1];
@@ -506,17 +506,13 @@ const imageResizeOutput = (src,config,callback)=>{
 	const img = new Image();
 
 	img.onload = ()=>{
-		ctx.drawImage(img,0,0,canvas.width,canvas.height);
+		ctx.drawImage(img,0,0,width,height);
 		callback(canvas.toDataURL('image/jpeg',config.quality));
 	};
 	img.src = src;
 };
 
 
-
-const getPixels = ()=>{
-	return ctx.getImageData(0,0,width,height);
-};
 
 const convolute = (pixels, weights)=>{
 	const side = Math.round(Math.sqrt(weights.length));
