@@ -59,6 +59,13 @@ const Convolutes = {
 		1/9, 1/9, 1/9,
 		1/9, 1/9, 1/9
 	],
+	// '桑拿':[
+	// 	1/25,1/25,1/25,1/25,1/25,
+	// 	1/25,1/25,1/25,1/25,1/25,
+	// 	1/25,1/25,1/25,1/25,1/25,
+	// 	1/25,1/25,1/25,1/25,1/25,
+	// 	1/25,1/25,1/25,1/25,1/25,
+	// ],
 	'浮雕':[
 		1,1,1,
 		1,1,-1,
@@ -187,10 +194,12 @@ const vaporwave = (img, config, callback)=>{
 
 
 	if(config.border){
-		setLeft += config.border;
-		setTop  += config.border;
-		setWidth  -= config.border *2;
-		setHeight -= config.border *2;
+		const leftBorder = setWidth * config.border/200;
+		const topBorder = setHeight * config.border/200;
+		setLeft += leftBorder;
+		setTop  += topBorder;
+		setWidth  -= leftBorder * 2;
+		setHeight -= topBorder * 2;
 	}
 
 
