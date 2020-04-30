@@ -43,6 +43,29 @@ const yuv2rgb = (y,u,v)=>{
 
 const randRange =(a,b)=>Math.floor(Math.random()*(b-a)+a);
 
+const Convolutes = {
+	'右倾':[
+		0, -1,  0,
+		-1, 2,  2,
+		0, -1,  0
+	],
+	'左倾':[
+		0, -1,  0,
+		3,  2, -2,
+		0, -1,  0
+	],
+	'桑拿':[
+		1/9, 1/9, 1/9,
+		1/9, 1/9, 1/9,
+		1/9, 1/9, 1/9
+	],
+	'浮雕':[
+		1,1,1,
+		1,1,-1,
+		-1,-1,-1
+	]
+}
+
 
 const canvas = document.createElement('canvas');
 const ctx = canvas.getContext('2d');
@@ -266,7 +289,7 @@ const vaporwave = (img, config, callback)=>{
 		if(config.sharpen){
 			pixel = convolute(
 				pixel,
-				config.convolute
+				Convolutes[config.convolute]||Convolutes['右倾']
 			);
 			pixelData = pixel.data;
 		}
