@@ -245,8 +245,8 @@ const vaporwave = (img, config, callback)=>{
 		ctx.textBaseline = 'middle';
 		ctx.fillText(
 			config.name,
-			_width * config.styleLeft - styleFontSize * 2,
-			_height * config.styleTop - styleFontSize/2
+			_width * config.styleLeft,// - styleFontSize * 2,
+			_height * config.styleTop// - styleFontSize/2
 		);
 	}
 

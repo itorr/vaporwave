@@ -137,8 +137,8 @@ const defaultStyle = {
 
 
 	styleName:false,
-	styleLeft:0.13,
-	styleTop:0.166,
+	styleLeft:0.07,
+	styleTop:0.16,
 
 	styleSize:0.7,
 
