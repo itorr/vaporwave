@@ -1,10 +1,18 @@
+@font-face {
+	font-family: ZpixReviewLocal;
+	src: url(../patina/zpix.woff2);
+}
 html{
 	background: #ffd9ec;
 	color: #00a835;
-	font:400 14px/1.4 BlinkMacSystemFont,"Hiragino Sans GB","Microsoft YaHei","微软雅黑",sans-serif;
+	font:400 14px/1.4 ZpixReviewLocal,BlinkMacSystemFont,"Hiragino Sans GB","Microsoft YaHei","微软雅黑",sans-serif;
 	text-rendering:optimizeLegibility;
-	-webkit-font-smoothing:antialiased;
-	-moz-osx-font-smoothing:grayscale;
+	/* -webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale; */
+
+	-webkit-font-smoothing: none;
+	-moz-osx-font-smoothing: none;
+	font-feature-settings: 'tnum';
 }
 body{
 	margin:0;
@@ -192,17 +200,6 @@ h1{
 	overflow: hidden;
 }
 
-input[type="range"]{
-	width: 100%;
-	margin:0;
-
-}
-input[type="checkbox"],
-input[type="radio"]{
-	display: inline-block;
-	vertical-align: middle;
-	margin-top:-3px;
-}
 .btn-box{
 	padding:2px 0 0;
 }
@@ -244,6 +241,20 @@ input[type="radio"]{
 	box-shadow:
 			0 0 0 2px #00a835 inset,
 			4px -2px 0 #ff32bb;
+}
+
+.btn-min{
+	border:0;
+    cursor: pointer;
+    outline: none;
+    background: #00a835;
+    color: #ffd9ec;
+    font-size: 12px;
+    line-height: 24px;
+	padding: 0 6px;
+}
+.btn-min:active{
+	box-shadow: 2px -1px 0 #ff32bb;
 }
 
 .label-box{
@@ -438,4 +449,94 @@ input[type="file"]{
 		font-size:14px;
 		line-height: 30px;
 	}
+}
+
+
+
+/* 20220407 itorr ui */
+input[type="range"]{
+	width:400px;
+	height:2px;
+	-webkit-appearance: none;
+	appearance: none;
+	max-width:100%;
+	margin:6px 0;
+	display: block;
+	background:#00a835;
+
+}
+input[type="range"]::-webkit-slider-runnable-track {
+	-webkit-appearance: none;
+	appearance: none;
+	cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb{
+	height:18px;
+	width:10px;
+	margin:-9px 0;
+	background:#00a835;
+	border:2px solid #ffd9ec;
+	-webkit-appearance:none;
+	appearance: none;
+	cursor: pointer;
+	border-radius:0;
+	box-shadow:none;
+}
+input[type="range"]:disabled{
+    opacity: .5;
+    cursor: not-allowed;
+}
+input[type="range"]:disabled::-webkit-slider-runnable-track {
+    cursor: not-allowed;
+}
+
+
+label{
+	cursor: pointer;
+	
+}
+label input[type="checkbox"],
+label input[type="radio"]{
+	display: inline-block;
+	vertical-align: middle;
+	margin:0 .3em .12em .2em;
+	width:14px;
+	height:14px;
+	border:2px solid #00a835;
+	-webkit-appearance:none;
+	appearance: none;
+	position: relative;
+}
+label input[type="checkbox"]{
+	border-radius:0;
+}
+label input[type="radio"]{
+	border-radius: 4px;
+
+}
+label input[type="checkbox"]:checked:after,
+label input[type="radio"]:checked:after{
+	content:'';
+	position: absolute;
+	width:8px;
+	height:8px;
+    background: #00a835;
+	margin:1px;
+}
+label input[type="radio"]:checked:after{
+	border-radius: 1px;
+}
+
+textarea{
+	border:2px solid #00a835;
+	width: 280px;
+	min-width:300px;
+	max-width:300px;
+	min-height:200px;
+	padding:4px 6px;
+	-webkit-appearance:none;
+	appearance: none;
+	border-radius: 0;
+	background:#faf6f1;
+	outline:none;
 }

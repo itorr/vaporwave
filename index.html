@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <title>蒸 気 機 - 蒸汽波 - 蒸汽波图片生成器 - 虚拟信号风格化影像后期工具</title>
-<link rel="stylesheet" href="document.css">
+<link rel="stylesheet" href="document.css?r=20220405">
 <meta name="viewport" content="width=device-width,user-scalable=0">
 <link rel="manifest" href="manifest.json" crossorigin="use-credentials">
 <div class="app">
@@ -49,7 +49,7 @@
 		<div class="img-list">
 			<img v-for="src,index in images"
 			     crossOrigin="Anonymous"
-			     :src="src"
+			     :src="imageBaseURi + src"
 			     @click="setImageAndDraw"
 			     @load="index===0&&setImageAndDraw($event)">
 		</div>
@@ -397,7 +397,7 @@
 							<label style="display:inline-block;margin-right:1em;">
 								<input type="checkbox" v-model="style.watermark">显示蒸汽机水印
 							</label>
-							<button @click="setLogoFromFile"
+							<button class="btn-min" @click="setLogoFromFile"
 							        :disabled="!style.watermark">选择水印</button>
 						</div>
 						<div class="label-box">

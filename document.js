@@ -163,6 +163,7 @@ const data = {
 	styles,
 	userStyles,
 	globalStyles:[],
+	imageBaseURi:'//magiconch.syouzyo.org/90s/captures/',
 	images
 };
 
@@ -405,10 +406,22 @@ const app = new Vue({
 
 const loadScript = (src,el) =>{
 	el = document.createElement('script');
+	el.onload = _=> document.body.removeChild(el);
 	el.src = src;
 	document.body.appendChild(el);
+	return el;
 };
 
-setTimeout(()=>{
-	loadScript('//s4.cnzz.com/z_stat.php?id=1278706389&web_id=1278706389');
+
+let _hmt = [];
+let dataLayer = [
+    ['js', new Date()],
+    ['config', 'G-13BQC1VDD8']
+];
+window.gtag = function() {
+	dataLayer.push(arguments);
+};
+setTimeout(_ => {
+	loadScript('//hm.baidu.com/hm.js?f4e477c61adf5c145ce938a05611d5f0');
+	loadScript('//www.googletagmanager.com/gtag/js?id=G-13BQC1VDD8');
 },400);
