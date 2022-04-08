@@ -219,6 +219,8 @@ h1{
 
 	text-align: center;
 	box-sizing: border-box;
+
+	appearance: none;
 }
 .btn.big{
 
@@ -252,11 +254,15 @@ h1{
     font-size: 12px;
     line-height: 24px;
 	padding: 0 6px;
+	appearance: none;
 }
 .btn-min:active{
 	box-shadow: 2px -1px 0 #ff32bb;
 }
-
+.btn-min:disabled{
+	opacity: 0.5;
+	cursor: not-allowed;
+}
 .label-box{
 	display: block;
 }
@@ -451,31 +457,36 @@ input[type="file"]{
 	}
 }
 
-
+:root{
+	--background-color:#ffd9ec;
+}
 
 /* 20220407 itorr ui */
 input[type="range"]{
 	width:400px;
-	height:2px;
+	height:20px;
 	-webkit-appearance: none;
 	appearance: none;
 	max-width:100%;
-	margin:6px 0;
+	margin:0;
 	display: block;
-	background:#00a835;
-
+	color:inherit;
+	background:none;
+	
 }
 input[type="range"]::-webkit-slider-runnable-track {
 	-webkit-appearance: none;
 	appearance: none;
 	cursor: pointer;
+	background:currentColor;
+	height:2px;
 }
 input[type="range"]::-webkit-slider-thumb{
 	height:18px;
 	width:10px;
-	margin:-9px 0;
-	background:#00a835;
-	border:2px solid #ffd9ec;
+	margin:-8px 0;
+	background:currentColor;
+	border:2px solid var(--background-color);
 	-webkit-appearance:none;
 	appearance: none;
 	cursor: pointer;
@@ -486,7 +497,7 @@ input[type="range"]:disabled{
     opacity: .5;
     cursor: not-allowed;
 }
-input[type="range"]:disabled::-webkit-slider-runnable-track {
+input[type="range"]:disabled::-webkit-slider-thumb{
     cursor: not-allowed;
 }
 
@@ -502,7 +513,8 @@ label input[type="radio"]{
 	margin:0 .3em .12em .2em;
 	width:14px;
 	height:14px;
-	border:2px solid #00a835;
+	color:currentColor;
+	border:2px solid currentColor;
 	-webkit-appearance:none;
 	appearance: none;
 	position: relative;
@@ -520,7 +532,7 @@ label input[type="radio"]:checked:after{
 	position: absolute;
 	width:8px;
 	height:8px;
-    background: #00a835;
+    background: currentColor;
 	margin:1px;
 }
 label input[type="radio"]:checked:after{
@@ -528,7 +540,8 @@ label input[type="radio"]:checked:after{
 }
 
 textarea{
-	border:2px solid #00a835;
+	color:currentColor;
+	border:2px solid currentColor;
 	width: 280px;
 	min-width:300px;
 	max-width:300px;
@@ -537,6 +550,6 @@ textarea{
 	-webkit-appearance:none;
 	appearance: none;
 	border-radius: 0;
-	background:#faf6f1;
+	background: var(--background-color);
 	outline:none;
 }
