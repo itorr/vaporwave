@@ -1,18 +1,19 @@
-@font-face {
+/* @font-face {
 	font-family: ZpixReviewLocal;
 	src: url(../patina/zpix.woff2);
-}
+	ZpixReviewLocal,
+} */
 html{
 	background: #ffd9ec;
 	color: #00a835;
-	font:400 14px/1.4 ZpixReviewLocal,BlinkMacSystemFont,"Hiragino Sans GB","Microsoft YaHei","微软雅黑",sans-serif;
+	font:400 14px/1.4 BlinkMacSystemFont,"Hiragino Sans GB","Microsoft YaHei","微软雅黑",sans-serif;
 	text-rendering:optimizeLegibility;
-	/* -webkit-font-smoothing:antialiased;
-	-moz-osx-font-smoothing:grayscale; */
+	-webkit-font-smoothing:antialiased;
+	-moz-osx-font-smoothing:grayscale;
 
-	-webkit-font-smoothing: none;
+	/* -webkit-font-smoothing: none;
 	-moz-osx-font-smoothing: none;
-	font-feature-settings: 'tnum';
+	font-feature-settings: 'tnum'; */
 }
 body{
 	margin:0;
