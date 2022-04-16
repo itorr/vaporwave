@@ -464,7 +464,7 @@ input[type="file"]{
 
 /* 20220407 itorr ui */
 input[type="range"]{
-	width:400px;
+	width:100%;
 	height:20px;
 	-webkit-appearance: none;
 	appearance: none;
@@ -531,6 +531,7 @@ label input[type="checkbox"]:checked:after,
 label input[type="radio"]:checked:after{
 	content:'';
 	position: absolute;
+	z-index:0;
 	width:8px;
 	height:8px;
     background: currentColor;
