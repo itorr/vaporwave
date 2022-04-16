@@ -473,7 +473,7 @@ input[type="range"]{
 	display: block;
 	color:inherit;
 	background:none;
-	
+	cursor: pointer;
 }
 input[type="range"]::-webkit-slider-runnable-track {
 	-webkit-appearance: none;
