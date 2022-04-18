@@ -4,7 +4,7 @@
 	ZpixReviewLocal,
 } */
 html{
-	background: #ffd9ec;
+	background: var(--background-color);
 	color: #00a835;
 	font:400 14px/1.4 BlinkMacSystemFont,"Hiragino Sans GB","Microsoft YaHei","微软雅黑",sans-serif;
 	text-rendering:optimizeLegibility;
@@ -84,10 +84,10 @@ a{
 	width: 40px;
 	text-align: center;
 }
-.style-list-box a .cor:hover{
+/* .style-list-box a .cor:hover{
 	background:#00a835;
 	color:#ffd9ec;
-}
+} */
 .cor.remove:after{
 	content: '✕';
 }
@@ -132,6 +132,9 @@ h1{
 	line-height: 1;
 
 	text-shadow:4px -2px 0 #ff32bb;
+}
+.output{
+	z-index: 1;
 }
 .output img{
 	display: inline-block;
@@ -411,13 +414,21 @@ input[type="file"]{
 	}
 	.style-list-box a{
 		float: left;
-		line-height: 40px;
-		padding:0 40px 0 10px;
+		font-size:14px;
+		line-height: 30px;
+		padding:0 24px 0 14px;
+	}
+	.style-list-box a .name{
+		letter-spacing: .2em;
+	}
+	.style-list-box a .cor{
+		width: 30px;
 	}
 	.output{
 		position: sticky;
 		top: 0;
 		left: 0;
+		box-shadow: 0 15px 30px -10px var(--background-color);
 	}
 	.output img{
 		display: block;
@@ -432,30 +443,39 @@ input[type="file"]{
 	.img-list{
 		padding-top:0;
 	}
+	.img-list img{
+		width: 120px;
+		height: 90px;
+	}
 	.style .group .body{
 		padding:10px 20px;
 	}
 }
 
-@media (max-width:630px){
+@media (max-width:430px){
 	.style-list-box a{
-		width: 33.33%;
+		width: 25%;
 		box-sizing:border-box;
-		padding:0 10px 0 0;
+		padding:0 12px 0 2px;
 		text-align: center;
-		letter-spacing:.3em;
 
 	}
+	.style-list-box a .name{
+		letter-spacing: .2em;
+	}
 	.style-list-box a .cor{
-		width: 30px;
+		font-size:12px;
+		width: 24px;
+	}
+
+	.img-list img{
+		width: 100px;
+		height: 75px;
 	}
 }
 
 @media (max-width:370px){
-	.style-list-box a{
-		font-size:14px;
-		line-height: 30px;
-	}
+	
 }
 
 :root{
@@ -519,6 +539,7 @@ label input[type="radio"]{
 	-webkit-appearance:none;
 	appearance: none;
 	position: relative;
+	z-index:0;
 }
 label input[type="checkbox"]{
 	border-radius:0;
@@ -531,7 +552,6 @@ label input[type="checkbox"]:checked:after,
 label input[type="radio"]:checked:after{
 	content:'';
 	position: absolute;
-	z-index:0;
 	width:8px;
 	height:8px;
     background: currentColor;

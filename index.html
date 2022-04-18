@@ -1,15 +1,23 @@
 <!DOCTYPE html>
+<html>
+<head>
 <meta charset="UTF-8">
 <title>蒸 気 機 - 蒸汽波 - 蒸汽波图片生成器 - 虚拟信号风格化影像后期工具</title>
 <link rel="stylesheet" href="document.css?r=20220403">
 <meta name="viewport" content="width=device-width,user-scalable=0">
 <link rel="manifest" href="manifest.json" crossorigin="use-credentials">
+</head>
+<body>
 <div class="app">
 	<div class="ctrl-box">
 
 		<!--<label>-->
 			<!--<input type="checkbox" v-model="showStyle">选项-->
 		<!--</label>-->
+		<div class="output">
+			<img :src="src" v-if="src" :data-wide="style.wide">
+		</div>
+
 		<div class="side-left-box">
 			<h1>蒸 気 機</h1>
 			<div class="style-list-box">
@@ -42,9 +50,6 @@
 				</div>
 
 			</div>
-		</div>
-		<div class="output">
-			<img :src="src" v-if="src" :data-wide="style.wide">
 		</div>
 		<div class="img-list">
 			<img v-for="src,index in images"
@@ -537,3 +542,5 @@
 <script src="styles.js"></script>
 <script src="images.js"></script>
 <script src="document.js"></script>
+</body>
+</html>
