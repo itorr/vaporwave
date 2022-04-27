@@ -67,6 +67,32 @@ const _vaporwave = (img,style,callback)=>{
 	},100);
 };
 
+
+
+const imageSuffixRegex = /!w300|w300\//;
+const imagesScroll = e=>{
+	// console.log(e);
+	const target = e.target;
+
+	const scrollLeft = target.scrollLeft;
+	const offsetWidth = target.offsetWidth;
+	const imagesEl = target.children;
+	const imageEl = imagesEl[0];
+	const itemWidth = imageEl.offsetWidth;
+	const showWidth = scrollLeft + offsetWidth;
+	const showNum = Math.ceil( showWidth / itemWidth );
+	app.images.forEach((image,index)=>{
+		if(image.show) return;
+
+		if(index <= showNum){
+			image.show = true;
+		}
+	})
+};
+
+images[0].src = images[0].src.replace(imageSuffixRegex,'');
+
+
 const deepCopy = o=>JSON.parse(JSON.stringify(o));
 
 const defaultStyle = {
@@ -163,7 +189,7 @@ const data = {
 	styles,
 	userStyles,
 	globalStyles:[],
-	imageBaseURi:'//magiconch.syouzyo.org/90s/captures/',
+	imageBaseURi:'captures/w300/',//'https://image.magiconch.com/90s/captures/',
 	images
 };
 
@@ -311,8 +337,6 @@ const setLogoFromFile = ()=>{
 	});
 };
 
-
-
 const app = new Vue({
 	el:'.app',
 	data,
@@ -362,19 +386,20 @@ const app = new Vue({
 		setImageAndDraw(e){
 			let img = e.target;
 
-			if(/!w300/.test(img.src)){
+			
+
+			if(imageSuffixRegex.test(img.src)){
 				img.onload = ()=>{
 					this.img = e.target;
 					this.vaporwave();
 				};
-				img.src = img.src.replace(/!w300$/,'!h480')
-			}else{
-				this.img = e.target;
-				this.vaporwave();
+				img.src = img.src.replace(imageSuffixRegex,'')//!h480
+				return;
 			}
 
-
-
+			this.img = e.target;
+			this.vaporwave();
+			
 		},
 		voteStyle(){
 
@@ -390,7 +415,8 @@ const app = new Vue({
 		},
 		postStyle,
 		uploadCapture,
-		setLogoFromFile
+		setLogoFromFile,
+		imagesScroll,
 	},
 	watch:{
 		style:{

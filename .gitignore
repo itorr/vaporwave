@@ -2,3 +2,5 @@ img
 bg.*
 output
 vue.2.6.11.min.js
+captures/*
+.vscode/*

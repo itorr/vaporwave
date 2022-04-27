@@ -51,12 +51,12 @@
 
 			</div>
 		</div>
-		<div class="img-list">
-			<img v-for="src,index in images"
+		<div class="img-list" @scroll="imagesScroll">
+			<img v-for="image,index in images"
 			     crossOrigin="Anonymous"
-			     :src="imageBaseURi + src"
+			     :src="image.show ? imageBaseURi + image.src : null"
 			     @click="setImageAndDraw"
-			     @load="index===0&&setImageAndDraw($event)">
+			     @load="index===0 && setImageAndDraw($event)">
 		</div>
 		<div class="side-right-box">
 			<div class="btn-box">
