@@ -53,6 +53,7 @@
 		</div>
 		<div class="img-list" @scroll="imagesScroll">
 			<img v-for="image,index in images"
+				:key="index"
 			     crossOrigin="Anonymous"
 			     :src="image.show ? imageBaseURi + image.src : null"
 			     @click="setImageAndDraw"

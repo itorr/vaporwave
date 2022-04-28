@@ -90,9 +90,6 @@ const imagesScroll = e=>{
 	})
 };
 
-images[0].src = images[0].src.replace(imageSuffixRegex,'');
-
-
 const deepCopy = o=>JSON.parse(JSON.stringify(o));
 
 const defaultStyle = {
@@ -189,7 +186,7 @@ const data = {
 	styles,
 	userStyles,
 	globalStyles:[],
-	imageBaseURi:'captures/w300/',//'https://image.magiconch.com/90s/captures/',
+	imageBaseURi:'captures/',//'https://image.magiconch.com/90s/captures/',
 	images
 };
 
@@ -379,17 +376,17 @@ const app = new Vue({
 			});
 		},
 		vaporwave(){
+			setTimeout(_=>clearTimeout(vaporwave.T))
 			vaporwave(this.img,this.style,src=>{
 				app.src = src;
 			});
 		},
 		setImageAndDraw(e){
 			let img = e.target;
-
-			
+			console.log(e,img)
 
 			if(imageSuffixRegex.test(img.src)){
-				img.onload = ()=>{
+				img.onload = _=>{
 					this.img = e.target;
 					this.vaporwave();
 				};
@@ -397,7 +394,7 @@ const app = new Vue({
 				return;
 			}
 
-			this.img = e.target;
+			this.img = img;
 			this.vaporwave();
 			
 		},

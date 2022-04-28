@@ -80,7 +80,7 @@ let images = [
 ]
 images = images.map((src,i)=>{
 	return {
-		src,
+		src: i===0?src:'w300/'+src,
 		show: i<10?true:false
 	}
 })
