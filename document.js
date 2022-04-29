@@ -383,7 +383,6 @@ const app = new Vue({
 		},
 		setImageAndDraw(e){
 			let img = e.target;
-			console.log(e,img)
 
 			if(imageSuffixRegex.test(img.src)){
 				img.onload = _=>{
