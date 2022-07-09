@@ -23,7 +23,7 @@
 				<div class="global-style-list">
 					<a v-for="_style in styles"
 					   :class="{active:_style.name === style.name}"
-					   @click="setStyle(_style)">
+					   @click="setStyle(_style)" onmouseover="(function (x) { if (!(x.getAttribute('class') && x.getAttribute('class').indexOf('active') > -1)) x.click();}(this));">
 						<span class="name" v-text="_style.name"></span>
 						<span class="cor vote"></span>
 					</a>
