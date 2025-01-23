@@ -21,46 +21,48 @@
 			<h1>蒸 気 機</h1>
 			<div class="style-list-box">
 				<div class="global-style-list">
-					<a v-for="_style in styles"
+					<button v-for="_style in styles"
 					   :class="{active:_style.name === style.name}"
 					   @click="setStyle(_style)">
 						<span class="name" v-text="_style.name"></span>
 						<span class="cor vote"></span>
-					</a>
+					</button>
 				</div>
 				<div class="user-style-list" v-if="userStyles.length">
 					<h4>个人预设</h4>
-					<a v-for="_style in userStyles"
+					<button v-for="_style in userStyles"
 					   :class="{active:_style.name === style.name}"
 					   @click="setStyle(_style)">
 						<span class="name" v-text="_style.name"></span>
 						<span class="cor remove" @click.stop.prevent="removeUserStyle(_style)"></span>
-					</a>
+					</button>
 				</div>
 				<div class="user-style-list" v-if="globalStyles.length">
 					<h4>公共预设</h4>
-					<a v-for="_style in globalStyles"
+					<button v-for="_style in globalStyles"
 					   :class="{active:_style.name === style.name}"
 					   @click="setStyle(_style)">
 						<span class="name" v-text="_style.name"></span>
 						<span class="cor vote"></span>
 						<!-- @click.stop.prevent="voteStyle(_style)" -->
-					</a>
+					</button>
 				</div>
 
 			</div>
 		</div>
 		<div class="img-list" @scroll="imagesScroll">
-			<img v-for="image,index in images"
+			<button v-for="image,index in images"
 				:key="index"
-			     crossOrigin="Anonymous"
-			     :src="image.show ? imageBaseURi + image.src : null"
-			     @click="setImageAndDraw"
-			     @load="index===0 && setImageAndDraw($event)">
+				@click="setImageAndDraw">
+				<img
+						crossOrigin="Anonymous"
+						:src="image.show ? imageBaseURi + image.src : null"
+						@load="index===0 && setImageAndDraw($event)">
+			</button>
 		</div>
 		<div class="side-right-box">
 			<div class="btn-box">
-				<a class="btn big wire" @click="chooseFile">打开图像</a>
+				<button class="btn big wire" @click="chooseFile">打开图像</button>
 				<button @click="output()" class="btn big">导出图像</button>
 			</div>
 			<div class="style" v-if="showStyle">

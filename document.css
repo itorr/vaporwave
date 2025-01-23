@@ -66,25 +66,27 @@ a{
 	opacity: .5;
 	padding:30px 0 6px 20px;
 }
-.style-list-box a{
+.style-list-box button{
 	line-height: 40px;
 	display: block;
 	cursor: pointer;
-	padding:0 44px 0 20px;
+	padding:0 52px 0 20px;
 	position: relative;
 	color:#00a835;
+	border: none;
+	background: transparent;
 }
-.style-list-box a .name{
+.style-list-box button .name{
 	letter-spacing:.5em;
 }
-.style-list-box a .cor{
+.style-list-box button .cor{
 	position: absolute;
 	right:0;
 	top:0;
 	width: 40px;
 	text-align: center;
 }
-/* .style-list-box a .cor:hover{
+/* .style-list-box button .cor:hover{
 	background:#00a835;
 	color:#ffd9ec;
 } */
@@ -94,11 +96,11 @@ a{
 .cor.vote:after{
 	content: '❤';
 }
-.style-list-box a:hover{
+.style-list-box button:hover{
 	box-shadow: 4px -2px 0 #ff32bb;
 	color:#ff32bb;
 }
-.style-list-box a.active{
+.style-list-box button.active{
 	background:#00a835;
 	color: #ffd9ec;
 
@@ -281,6 +283,12 @@ input[type="file"]{
 	overflow: auto;
 	font-size:0;
 }
+.img-list button {
+	padding: 0;
+	margin: 0;
+	border: none;
+	background-color: transparent;
+}
 .img-list img{
 	display: inline-block;
 	vertical-align: top;
@@ -290,7 +298,7 @@ input[type="file"]{
 	cursor: pointer;
 	background: #ff32bb;
 }
-.img-list img:nth-child(even){
+.img-list button:nth-child(even) img {
 	background:#00a835;
 }
 
@@ -412,16 +420,16 @@ input[type="file"]{
 	.style-list-box h4{
 		display: none;
 	}
-	.style-list-box a{
+	.style-list-box button{
 		float: left;
 		font-size:14px;
 		line-height: 30px;
 		padding:0 24px 0 14px;
 	}
-	.style-list-box a .name{
+	.style-list-box button .name{
 		letter-spacing: .2em;
 	}
-	.style-list-box a .cor{
+	.style-list-box button .cor{
 		width: 30px;
 	}
 	.output{
@@ -453,17 +461,17 @@ input[type="file"]{
 }
 
 @media (max-width:430px){
-	.style-list-box a{
+	.style-list-box button{
 		width: 25%;
 		box-sizing:border-box;
 		padding:0 12px 0 2px;
 		text-align: center;
 
 	}
-	.style-list-box a .name{
+	.style-list-box button .name{
 		letter-spacing: .2em;
 	}
-	.style-list-box a .cor{
+	.style-list-box button .cor{
 		font-size:12px;
 		width: 24px;
 	}
